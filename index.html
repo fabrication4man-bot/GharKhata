@@ -1,33 +1,664 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="application-name" content="GharKhata"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="GharKhata">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#155e4b"><meta name="description" content="Offline-first household income and expense manager with farming records and backup.">
-<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css"><title>GharKhata — घर का हर खर्च, एक जगह</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNXHMBR24N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VNXHMBR24N');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Gulf Duty &amp; Salary Pro</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1f42">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<style>
+*{box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:12px;background:#f1f5f9;color:#0f172a}
+.wrap{max-width:480px;margin:0 auto;padding-bottom:30px}
+.hdr{background:linear-gradient(135deg,#07152f,#163d70);color:#fff;padding:16px;border-radius:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 5px 16px rgba(7,21,47,.18);border:1px solid rgba(227,173,53,.6);position:relative;overflow:hidden}.hdr:after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#b77a12,#ffe18a,#e3ad35)}
+.hdr-tag{background:rgba(227,173,53,.14);color:#f5ce71;font-size:.65rem;font-weight:800;padding:4px 8px;border:1px solid rgba(227,173,53,.35);border-radius:6px;display:inline-block;margin-bottom:5px;letter-spacing:.5px}
+.hdr h1{margin:0;font-size:1.2rem;font-weight:800}
+.hdr p{margin:4px 0 0;font-size:.75rem;color:#cbd5e1}
+.badge{background:rgba(255,255,255,.12);padding:8px 12px;border-radius:12px;text-align:right;min-width:95px}
+.badge span{font-size:.65rem;color:#cbd5e1;display:block;font-weight:700}
+.badge b{display:block;font-size:1.15rem;color:#f5ce71;margin-top:2px}
+.card{background:#fff;padding:14px;border-radius:16px;margin-bottom:12px;box-shadow:0 3px 10px rgba(11,31,66,.045);border:1px solid #dce4ef}
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sec-title{font-size:.75rem;font-weight:800;color:#334766;text-transform:uppercase;letter-spacing:.35px}
+.rate-pill{background:#fff6dc;color:#61440b;border:1px solid #f0d28a;font-size:.72rem;font-weight:800;padding:4px 8px;border-radius:7px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.inp label{display:block;font-size:.72rem;font-weight:700;color:#64748b;margin-bottom:4px}
+.inp input,.inp select{width:100%;padding:8px;border:1.5px solid #cbd5e1;border-radius:10px;font-weight:800;font-size:.9rem;background:#fff;color:#0f172a}
+.qbar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.qbtn{padding:10px 4px;border-radius:10px;border:1.5px solid #e2e8f0;background:#f8fafc;font-size:.75rem;font-weight:800;cursor:pointer;text-align:center;color:#334155;line-height:1.3}
+.qbtn small{display:block;font-size:.62rem;font-weight:600;opacity:.8;margin-top:2px}
+.qbtn.act-edit{background:#0b1f42;color:#fff;border-color:#e3ad35}
+.qbtn.act-present{background:#16a34a;color:#fff;border-color:#16a34a}
+.qbtn.act-absent{background:#dc2626;color:#fff;border-color:#dc2626}
+.qbtn.act-none{background:#475569;color:#fff;border-color:#475569}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.nav button{background:#f1f5f9;border:1.5px solid #cbd5e1;padding:8px 14px;border-radius:10px;font-weight:800;cursor:pointer;color:#0f172a;font-size:.82rem}
+.mtitle{font-weight:800;font-size:1.1rem;text-align:center}
+.msub{font-size:.68rem;color:#64748b;text-align:center;margin-top:2px}
+.leg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:.7rem;font-weight:800;margin-bottom:10px}
+.leg-pill{padding:4px 8px;border-radius:8px;display:flex;align-items:center;gap:5px;border:1px solid #e2e8f0;background:#f8fafc}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dname{text-align:center;font-size:.7rem;font-weight:800;color:#64748b;padding-bottom:4px}
+.dname.fri{color:#2563eb}
+.cell{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:800;font-size:.9rem;border:2px solid transparent;user-select:none}
+.cell.empty{background:transparent;cursor:default}
+.cell.none{background:#f8fafc;color:#475569;border:1.5px dashed #cbd5e1}
+.cell.present{background:#dcfce7;color:#15803d;border-color:#4ade80}
+.cell.absent{background:#fee2e2;color:#b91c1c;border-color:#f87171}
+.cell.friday{background:#dbeafe;color:#1d4ed8;border-color:#60a5fa}
+.cell.holiday{background:#f3e8ff;color:#7e22ce;border-color:#c084fc}
+.cell.sick{background:#ffedd5;color:#c2410c;border-color:#fb923c}
+.sub{font-size:.55rem;font-weight:800;opacity:.85}
+.otb{font-size:.55rem;background:#0b1f42;color:#f5ce71;padding:1px 4px;border-radius:4px;margin-top:1px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed #e2e8f0;font-size:.84rem}
+.row b{text-align:right}
+.tot{background:#fff8e6;border:2px solid #e7c56f;padding:12px;border-radius:12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.tot b{font-size:1.35rem;color:#0b1f42}
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.65);display:none;align-items:center;justify-content:center;padding:14px;z-index:99}
+.modal{background:#fff;width:100%;max-width:350px;border-radius:16px;padding:16px;max-height:90vh;overflow:auto}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.sbtn{padding:10px 6px;border-radius:10px;border:2px solid #e2e8f0;background:#f8fafc;font-weight:800;font-size:.8rem;cursor:pointer;text-align:center}
+.sbtn.act.present{background:#16a34a;color:#fff;border-color:#16a34a}
+.sbtn.act.absent{background:#dc2626;color:#fff;border-color:#dc2626}
+.sbtn.act.friday{background:#2563eb;color:#fff;border-color:#2563eb}
+.sbtn.act.holiday{background:#9333ea;color:#fff;border-color:#9333ea}
+.sbtn.act.none{background:#475569;color:#fff;border-color:#475569}
+.sbtn.act.sick{background:#ea580c;color:#fff;border-color:#ea580c}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chip{background:#e2e8f0;border:none;padding:6px 10px;border-radius:6px;font-weight:800;font-size:.75rem;cursor:pointer}
+.mact{display:flex;gap:8px;margin-top:14px}
+.bsave{flex:1;background:#16a34a;color:#fff;border:none;padding:11px;border-radius:10px;font-weight:800;cursor:pointer}
+.bcan{background:#e2e8f0;border:none;padding:11px 14px;border-radius:10px;font-weight:800;cursor:pointer}
+.note{font-size:.72rem;line-height:1.45;color:#64748b;margin-top:9px}
+
+/* App sharing and QR panel */
+.share-modal{position:fixed;inset:0;background:rgba(15,23,42,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:200}
+.share-panel{background:#fff;color:#0f172a;width:100%;max-width:380px;max-height:92vh;overflow:auto;border-radius:18px;padding:18px;box-shadow:0 18px 55px rgba(0,0,0,.25)}
+.share-title{font-size:1.1rem;font-weight:900;margin:0 0 5px}
+.share-desc{font-size:.78rem;line-height:1.45;color:#64748b;margin:0 0 12px}
+.share-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.share-action{border:0;border-radius:10px;padding:11px 8px;font-weight:800;font-size:.8rem;cursor:pointer;background:#e2e8f0;color:#0f172a}
+.share-action.primary{background:#2563eb;color:#fff}
+.share-action.green{background:#15803d;color:#fff}
+.qr-box{display:flex;justify-content:center;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;min-height:220px}
+#appQr canvas,#appQr img{max-width:100%;height:auto!important}
+.share-foot{font-size:.7rem;color:#64748b;line-height:1.4;margin-top:10px;text-align:center}
+
+.print-only-note{font-size:12px;color:#64748b}
+.app-footer{margin:14px 0 8px;padding:14px;background:#fff;border:1px solid #dce4ef;border-radius:16px;box-shadow:0 3px 10px rgba(11,31,66,.045)}
+.app-footer h2{margin:0 0 5px;font-size:.95rem;color:#0b1f42}.app-footer p{margin:0 0 10px;font-size:.75rem;line-height:1.45;color:#64748b}
+.footer-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.footer-action{display:block;width:100%;padding:11px 8px;border:1px solid #dce4ef;border-radius:10px;background:#f8fafc;color:#0b1f42;font-weight:800;font-size:.78rem;cursor:pointer}.footer-action.primary{background:linear-gradient(135deg,#0b1f42,#163d70);color:#fff;border-color:#e3ad35}.footer-action.green{background:#15803d;color:#fff;border-color:#15803d}
+@media print{
+  body{background:#fff!important;padding:0!important}
+}
+
+
+.brandhead{display:flex;align-items:center;gap:13px}.brandmark{width:68px;height:68px;flex:0 0 68px}.brandmark svg{width:100%;height:100%;display:block}
+.brandcopy h1{font-size:22px;margin:0 0 5px;letter-spacing:-.35px;color:#fff}.brandcopy h1 span{color:#e3ad35}
+.brandcopy p{margin:0;color:#dce5f3;font-size:12px}.brandcopy p b{color:#e3ad35;padding:0 4px}
+header{background:linear-gradient(135deg,#07152f,#163d70)!important;border-bottom:3px solid #e3ad35}
+.btn{background:linear-gradient(135deg,#0b1f42,#163d70)!important;border-bottom:2px solid #e3ad35}
+input:focus,select:focus,textarea:focus{outline:2px solid #e3ad35;outline-offset:1px;border-color:#163d70}
+
+
+:root{color-scheme:light}
+button{transition:filter .15s ease,transform .15s ease}
+button:active{filter:brightness(.96);transform:translateY(1px)}
+@media(max-width:360px){body{padding:8px}.hdr{padding:12px}.badge{min-width:82px;padding:7px 9px}.grid3{gap:6px}.card{padding:11px}.brandmark{width:58px;height:58px;flex-basis:58px}.brandcopy h1{font-size:19px}}
+
+</style>
 </head>
-<body>
-<header class="topbar"><div class="brand"><img class="brand-icon-img" src="icon-192.png" alt="GharKhata logo"><div><h1 data-i18n="appName">GharKhata</h1><small data-i18n="tagline">घर का हर खर्च, एक जगह</small></div></div><button id="langToggle" class="lang-btn" aria-label="Change language">हिंदी</button></header>
-<main>
-<section id="dashboard" class="page active">
-<div class="welcome"><div><p class="eyebrow" data-i18n="overview">OVERVIEW</p><h2 data-i18n="goodDay">Your household at a glance</h2><p id="todayLabel" class="muted"></p></div><button class="primary" id="quickAdd">＋ <span data-i18n="addEntry">Add entry</span></button></div>
-<div class="balance-card"><div class="balance-head"><span data-i18n="netBalance">Tracked account balance</span><span class="pill" data-i18n="localOnly">Local only</span></div><div id="totalBalance" class="balance-amount">₹0.00</div><div class="balance-foot"><span><i class="dot income-dot"></i><span data-i18n="income">Income</span> <b id="monthIncome">₹0</b></span><span><i class="dot expense-dot"></i><span data-i18n="expense">Expense</span> <b id="monthExpense">₹0</b></span></div></div>
-<div class="section-heading"><h3 data-i18n="atAGlance">At a glance</h3><button class="text-btn" data-page="reports" data-i18n="viewReports">View reports →</button></div>
-<div class="stat-grid"><article class="stat-card"><span class="stat-icon mint">↘</span><small data-i18n="thisMonthIncome">This month's income</small><strong id="statIncome">₹0</strong></article><article class="stat-card"><span class="stat-icon peach">↗</span><small data-i18n="thisMonthExpense">This month's expenses</small><strong id="statExpense">₹0</strong></article><article class="stat-card"><span class="stat-icon lilac">⇄</span><small data-i18n="accounts">Accounts</small><strong id="statAccounts">1</strong></article><article class="stat-card"><span class="stat-icon gold">◷</span><small data-i18n="upcoming">Upcoming reminders</small><strong id="statReminders">0</strong></article></div>
-<div class="section-heading"><h3 data-i18n="recentActivity">Recent activity</h3><button class="text-btn" data-page="transactions" data-i18n="seeAll">See all →</button></div><div id="recentList" class="list-card"></div>
-<div class="section-heading"><h3 data-i18n="quickActions">Quick actions</h3></div><div class="quick-grid"><button class="quick-action" data-type="expense"><span class="qa-icon peach">＋</span><span data-i18n="addExpense">Add expense</span></button><button class="quick-action" data-type="income"><span class="qa-icon mint">↙</span><span data-i18n="addIncome">Add income</span></button><button class="quick-action" data-page="accounts"><span class="qa-icon lilac">▣</span><span data-i18n="manageAccounts">Manage accounts</span></button><button class="quick-action" data-page="backup"><span class="qa-icon gold">⇧</span><span data-i18n="backupRestore">Backup & restore</span></button><button class="quick-action" data-page="grocery"><span class="qa-icon peach">🛒</span><span>मासिक किराना सूची</span></button><button class="quick-action" data-page="shareapp"><span class="qa-icon mint">↗</span><span>Share / Promote app</span></button></div>
-</section>
-<section id="transactions" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="yourRecords">YOUR RECORDS</p><h2 data-i18n="transactions">Transactions</h2></div><button class="primary" id="newTransaction">＋ <span data-i18n="addNew">Add new</span></button></div><div class="filters"><input id="searchTransactions" type="search" placeholder="Search records…" data-i18n-placeholder="searchRecords"><select id="filterType"><option value="all" data-i18n="allTypes">All types</option><option value="expense" data-i18n="expense">Expense</option><option value="income" data-i18n="income">Income</option><option value="transfer" data-i18n="transfer">Transfer</option><option value="loan-given" data-i18n="loanGiven">Loan given</option><option value="loan-taken" data-i18n="loanTaken">Loan taken</option><option value="repayment" data-i18n="repayment">Repayment</option></select></div><div id="transactionList" class="list-card"></div></section>
-<section id="farming" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="farmDesk">FARM DESK</p><h2 data-i18n="farming">Farming & livestock</h2></div><button class="primary" id="newFarm">＋ <span data-i18n="addFarmRecord">Add record</span></button></div><div class="info-banner"><span class="banner-icon">🌱</span><div><b data-i18n="farmTracking">Track each crop season</b><p data-i18n="farmTrackingDesc">Record field work, inputs, labour and crop or milk income.</p></div></div><div class="stat-grid"><article class="stat-card"><small data-i18n="farmCosts">Recorded farm costs</small><strong id="farmCosts">₹0</strong></article><article class="stat-card"><small data-i18n="farmIncome">Farm income</small><strong id="farmIncome">₹0</strong></article></div><div class="section-heading"><h3 data-i18n="farmRecords">Farm records</h3></div><div id="farmList" class="list-card"></div></section>
-<section id="accounts" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="moneyPlaces">MONEY PLACES</p><h2 data-i18n="accounts">Accounts</h2></div><button class="primary" id="newAccount">＋ <span data-i18n="addAccount">Add account</span></button></div><p class="muted" data-i18n="accountHint">Keep cash, bank accounts, UPI wallets and cards separate.</p><div id="accountList" class="account-grid"></div></section>
-<section id="reports" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="patterns">PATTERNS & PLANS</p><h2 data-i18n="reportsBudget">Reports & budget</h2></div></div><div class="report-controls"><label data-i18n="reportMonth">Report month<input id="reportMonth" type="month"></label><button class="secondary" id="exportCsv" data-i18n="exportCsv">Export CSV</button></div><div class="report-actions"><button class="secondary" id="downloadReport">रिपोर्ट डाउनलोड</button><button class="secondary" id="printReport">प्रिंट / PDF</button><button class="primary" id="shareReport">रिपोर्ट शेयर</button></div><div class="stat-grid"><article class="stat-card"><small data-i18n="income">Income</small><strong id="reportIncome">₹0</strong></article><article class="stat-card"><small data-i18n="expense">Expense</small><strong id="reportExpense">₹0</strong></article><article class="stat-card"><small data-i18n="net">Net</small><strong id="reportNet">₹0</strong></article></div><div class="section-heading"><h3 data-i18n="spendingCategories">Spending categories</h3></div><div id="categoryReport" class="list-card"></div><div class="section-heading"><h3 data-i18n="monthlyBudgets">Monthly budgets</h3><button class="text-btn" id="newBudget" data-i18n="setBudget">＋ Set budget</button></div><div id="budgetList" class="list-card"></div><div class="section-heading"><h3 data-i18n="reminders">Reminders</h3><button class="text-btn" id="newReminder" data-i18n="addReminder">＋ Add reminder</button></div><div id="reminderList" class="list-card"></div></section>
-<section id="family" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="peopleAndPurpose">PEOPLE & PURPOSE</p><h2 data-i18n="familyMembers">Family & members</h2></div><button class="primary" id="newMember">＋ <span data-i18n="addMember">Add member</span></button></div><p class="muted" data-i18n="familyHint">Tag entries to a family member, child or person who received money.</p><div id="memberList" class="list-card"></div><div class="section-heading"><h3 data-i18n="categories">Categories</h3><button class="text-btn" id="newCategory" data-i18n="addCategory">＋ Add category</button></div><div id="customCategoryList" class="list-card"></div></section>
-<section id="grocery" class="page"><div class="page-title"><div><p class="eyebrow">MONTHLY SHOPPING</p><h2>मासिक किराना सूची</h2><p class="muted">50 लाइन · यूनिट चुनें · कीमत वैकल्पिक</p></div></div><div class="grocery-controls"><label>महीना<input id="groceryMonth" type="month"></label><button class="secondary" id="loadGrocery">लिस्ट खोलें</button><button class="primary" id="saveGrocery">लिस्ट सेव करें</button></div><div class="table-scroll"><table class="grocery-table"><thead><tr><th>क्र.</th><th>सामान का नाम</th><th>मात्रा</th><th>यूनिट</th><th>कीमत (वैकल्पिक)</th></tr></thead><tbody id="groceryRows"></tbody></table></div><div class="report-actions"><button class="secondary" id="downloadGrocery">डाउनलोड CSV</button><button class="secondary" id="printGrocery">प्रिंट</button><button class="primary" id="shareGrocery">शेयर लिस्ट</button></div><p class="footnote">यूनिट में Gram, Kilogram, Liter, Milliliter, PCS या रुपये के हिसाब से चुन सकते हैं। रकम से मँगाए सामान के लिए मात्रा खाली छोड़कर कीमत में रकम लिखें।</p></section>
-<section id="orders" class="page"><div class="page-title"><div><p class="eyebrow">ONLINE ORDERS</p><h2>ई-कॉमर्स खरीदारी</h2></div></div><form id="orderForm" class="order-form"><div class="modal-fields"><div class="field"><label>प्लेटफ़ॉर्म</label><select name="platform"><option>Amazon</option><option>Flipkart</option><option>Myntra</option><option>अन्य</option></select></div><div class="field"><label>ऑर्डर ID</label><input name="orderId" placeholder="Order ID"></div><div class="field"><label>सामान का नाम</label><input name="item" required placeholder="क्या सामान आया?"></div><div class="field"><label>Category</label><select name="category"><option>घर / किराना</option><option>इलेक्ट्रॉनिक्स</option><option>कपड़े</option><option>स्वास्थ्य</option><option>वाहन / मशीनरी</option><option>अन्य</option></select></div><div class="field"><label>मात्रा</label><input name="quantity" type="number" min="1" step="1" value="1"></div><div class="field"><label>सामान की कीमत</label><input name="price" type="number" min="0" step="0.01" required></div><div class="field"><label>डिलीवरी चार्ज</label><input name="shipping" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>डिस्काउंट</label><input name="discount" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>ऑर्डर तारीख</label><input name="orderDate" type="date" required></div><div class="field"><label>डिलीवरी तारीख</label><input name="deliveryDate" type="date"></div><div class="field"><label>भुगतान का तरीका</label><select name="payment"><option>UPI</option><option>Cash on Delivery</option><option>Card</option><option>Net Banking</option><option>अन्य</option></select></div><div class="field"><label>स्थिति</label><select name="status"><option>ऑर्डर किया</option><option>डिलीवर हुआ</option><option>कैंसिल</option><option>रिटर्न</option><option>रिफंड मिला</option></select></div><div class="field"><label>रिफंड रकम</label><input name="refund" type="number" min="0" step="0.01" value="0"></div><div class="field full"><label>बिल / इनवॉइस लिंक या विवरण</label><input name="invoice" placeholder="वैकल्पिक"></div><div class="field full"><label>नोट / खरीदारी का कारण</label><textarea name="notes" placeholder="वैकल्पिक"></textarea></div></div><div class="modal-actions"><button type="submit" class="primary">ऑर्डर सेव करें</button></div></form><div class="section-heading"><h3>ऑर्डर का रिकॉर्ड</h3><button class="secondary" id="exportOrders">CSV डाउनलोड</button></div><div id="orderList" class="list-card"></div></section>
-<section id="shareapp" class="page"><div class="page-title"><div><p class="eyebrow">GHARKHATA</p><h2>ऐप शेयर और प्रमोट करें</h2></div></div><div class="share-card"><h3>GharKhata — घर का हर खर्च, एक जगह</h3><p>परिवार और दोस्तों के साथ ऐप का लिंक शेयर करें। QR Code स्कैन करके वे वेब ऐप खोल सकते हैं।</p><img id="appQr" class="app-qr" src="app-qr.png" alt="GharKhata QR code"><p class="muted">QR Code के लिए इंटरनेट चाहिए।</p><div class="report-actions"><button class="primary" id="shareAppLink">ऐप लिंक शेयर करें</button><button class="secondary" id="copyAppLink">लिंक कॉपी करें</button></div></div><div class="settings-card"><div><h3>सीधे APK डाउनलोड करें</h3><p>APK लिंक तभी काम करेगा जब रिलीज़ में GharKhata.apk अपलोड हो जाएगा।</p></div><a class="primary link-button" href="https://github.com/fabrication4man-bot/GharKhata/releases/latest/download/GharKhata.apk" target="_blank" rel="noopener">APK डाउनलोड</a></div><p class="footnote">ऐप लिंक: https://fabrication4man-bot.github.io/GharKhata/</p></section>
-<section id="backup" class="page"><div class="page-title"><div><p class="eyebrow" data-i18n="yourData">YOUR DATA</p><h2 data-i18n="backupRestore">Backup & restore</h2></div></div><div class="info-banner warning"><span class="banner-icon">⚠</span><div><b data-i18n="backupImportant">Your data stays on this device</b><p data-i18n="backupImportantDesc">Clearing browser data or losing your phone can erase records. Export a backup regularly.</p></div></div><div class="settings-card"><div><h3 data-i18n="createBackup">Create backup</h3><p data-i18n="createBackupDesc">Save all records, accounts, budgets, reminders and settings in a JSON file.</p></div><button class="primary" id="createBackup" data-i18n="downloadBackup">Download backup</button></div><div class="settings-card"><div><h3 data-i18n="restoreBackup">Restore backup</h3><p data-i18n="restoreBackupDesc">Import a backup JSON file. This replaces current app data.</p></div><label class="secondary file-label"><span data-i18n="chooseFile">Choose file</span><input id="restoreFile" type="file" accept="application/json,.json" hidden></label></div><div class="settings-card"><div><h3 data-i18n="backupReminder">Backup reminder</h3><p data-i18n="backupReminderDesc">Show an in-app reminder if you have not backed up recently.</p></div><label class="switch"><input type="checkbox" id="backupReminderToggle" checked><span class="slider"></span></label></div><div class="settings-card"><div><h3 data-i18n="language">Language</h3><p data-i18n="languageDesc">Choose Hindi or English for the interface.</p></div><button class="secondary" id="settingsLang">हिंदी / English</button></div><div class="settings-card danger-zone"><div><h3 data-i18n="clearData">Clear all app data</h3><p data-i18n="clearDataDesc">Permanently delete records from this device. Export a backup first.</p></div><button class="danger" id="clearData" data-i18n="clearAll">Clear all</button></div><p class="footnote" data-i18n="privacyNote">No account, PIN or cloud sync in this version. Each device has separate data.</p></section>
-</main>
-<nav class="bottom-nav" aria-label="Main navigation"><button class="nav-item active" data-page="dashboard"><span>⌂</span><small data-i18n="home">Home</small></button><button class="nav-item" data-page="transactions"><span>⇄</span><small data-i18n="transactions">Transactions</small></button><button class="nav-item" data-page="farming"><span>♧</span><small data-i18n="farming">Farming</small></button><button class="nav-item" data-page="reports"><span>▥</span><small data-i18n="reports">Reports</small></button><button class="nav-item" data-page="family"><span>♙</span><small data-i18n="family">Family</small></button><button class="nav-item" data-page="grocery"><span>🛒</span><small>किराना</small></button><button class="nav-item" data-page="orders"><span>📦</span><small>ऑर्डर</small></button><button class="nav-item" data-page="shareapp"><span>↗</span><small>शेयर</small></button></nav>
-<div id="modalRoot" class="modal-root" hidden><div class="modal-backdrop" data-close-modal></div><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle"></h2><button class="icon-btn" data-close-modal aria-label="Close">×</button></div><form id="modalForm"><div id="modalFields" class="modal-fields"></div><div class="modal-actions"><button type="button" class="secondary" data-close-modal data-i18n="cancel">Cancel</button><button type="submit" class="primary" data-i18n="saveEntry">Save entry</button></div></form></section></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
-<script src="app.js"></script>
-</body></html>
+<body><header><div class='wrap brandhead'><div class="brandmark" aria-label="Gulf Duty & Salary Pro logo"><img src="./icon-192.png" alt="Gulf Duty & Salary Pro" width="68" height="68" style="width:100%;height:100%;object-fit:contain;display:block"></div><div class='brandcopy'><h1>Gulf Duty &amp; Salary <span>Pro</span></h1><p>Work Smart · Calculate Easy · Plan Better</p></div></div></header>
+<div class="wrap">
+  <div class="hdr">
+    <div>
+      <span class="hdr-tag" id="countrySickTag">KUWAIT SICK LEAVE ESTIMATE</span>
+      <h1>Gulf Duty &amp; Salary Pro</h1>
+      <p>8h Normal &bull; 1.25x OT &bull; 1.5x Friday &bull; 2.0x Holiday</p>
+    </div>
+    <div class="badge"><span>NET PAY</span><b id="topSal">0.000 KD</b></div>
+  </div>
+  <div class="card" style="padding:10px;display:grid;gap:8px">
+    <div class="sec-hdr"><span class="sec-title">Employee Details (Optional)</span></div>
+    <div class="grid3" style="grid-template-columns:1fr 1fr">
+      <div class="inp"><label>Employee Name (optional)</label><input id="employeeNameInp" type="text" placeholder="Employee name"></div>
+      <div class="inp"><label>Employee ID (optional)</label><input id="employeeIdInp" type="text" placeholder="Employee ID"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-hdr"><span class="sec-title">1. Salary Configuration</span><span class="rate-pill" id="topRate">1.010 KWD/HR</span></div>
+    <div class="grid3">
+      <div class="inp"><label>Salary Currency</label><select id="currencyInp" onchange="saveCfg()"><option value="KWD">Kuwait (KWD)</option><option value="SAR">Saudi (SAR)</option><option value="AED">UAE (AED)</option><option value="QAR">Qatar (QAR)</option><option value="OMR">Oman (OMR)</option><option value="BHD">Bahrain (BHD)</option></select></div>
+      <div class="inp"><label id="basicLabel">Basic (KWD)</label><input type="number" id="basicInp" value="0" min="0" onchange="saveCfg()"></div>
+      <div class="inp"><label id="allowLabel">Allowance (KWD)</label><input type="number" id="allowInp" value="0" onchange="saveCfg()"></div>
+      <div class="inp"><label>OT Base</label><select id="baseInp" onchange="saveCfg()"><option value="26">26 Days</option></select></div>
+    </div>
+    <div class="row"><span>Latest exchange rate:</span><b id="fxRate">Loading currency rate…</b></div>
+    <div class="note" id="fxUpdated">Internet connection is needed to fetch the latest daily rate.</div>
+  </div>
+  <div class="card nav">
+    <button onclick="chgM(-1)">&larr; Prev</button><div><div class="mtitle" id="mLbl">Month</div><div class="msub">Tap date to manage attendance</div></div><button onclick="chgM(1)">Next &rarr;</button>
+  </div>
+  <div class="card">
+    <div class="sec-hdr"><span class="sec-title">2. Attendance Marking Mode</span><span class="rate-pill" id="modeBadge" style="background:#eff6ff;color:#1d4ed8">Detailed OT Mode</span></div>
+    <div class="qbar">
+      <button class="qbtn act-edit" id="m-edit" onclick="setMode('edit')">&#9998; OT / Edit<small>Detailed Popup</small></button>
+      <button class="qbtn" id="m-present" onclick="setMode('present')">&#10004; Present<small>Quick Green</small></button>
+      <button class="qbtn" id="m-absent" onclick="setMode('absent')">&#10006; Absent<small>Quick Red</small></button>
+      <button class="qbtn" id="m-none" onclick="setMode('none')">&#9003; Clear<small>Reset Date</small></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="leg">
+      <span class="leg-pill"><i class="dot" style="background:#94a3b8"></i>Blank</span>
+      <span class="leg-pill" style="background:#dcfce7;color:#15803d"><i class="dot" style="background:#16a34a"></i>Present</span>
+      <span class="leg-pill" style="background:#fee2e2;color:#b91c1c"><i class="dot" style="background:#dc2626"></i>Absent</span>
+      <span class="leg-pill" style="background:#dbeafe;color:#1d4ed8"><i class="dot" style="background:#2563eb"></i>Friday</span>
+      <span class="leg-pill" style="background:#f3e8ff;color:#7e22ce"><i class="dot" style="background:#9333ea"></i>Holiday</span>
+      <span class="leg-pill" style="background:#ffedd5;color:#c2410c"><i class="dot" style="background:#ea580c"></i>Sick Leave</span>
+    </div>
+    <div class="cal" id="calGrid"></div>
+  </div>
+  <div class="card">
+    <div class="sec-hdr"><span class="sec-title">3. Monthly Salary Breakdown</span><select id="modeInp" onchange="saveCfg()" style="padding:4px 8px;border-radius:6px;border:1px solid #cbd5e1;font-weight:700;font-size:.72rem"><option value="earned">Earned Salary (Duty Days Only)</option></select></div>
+    <div class="row"><span>Daily / Hourly Rate:</span><b id="rRate">0 KWD</b></div>
+    <div class="row"><span>Total Attendance:</span><b id="rAtt">0 P | 0 A | 0 Fri</b></div>
+    <div class="row"><span>Sick Leave:</span><b id="rSick">0 days</b></div>
+    <div class="row"><span>Normal OT (1.25x):</span><b id="rNot" style="color:#15803d">0h (+0.000 KWD)</b></div>
+    <div class="row"><span>Friday Duty (1.50x):</span><b id="rFot" style="color:#1d4ed8">0h (+0.000 KWD)</b></div>
+    <div class="row"><span>Holiday Duty (2.00x):</span><b id="rHot" style="color:#7e22ce">0h (+0.000 KWD)</b></div>
+    <div class="row"><span>Food / Other Allowance:</span><b id="rAll">+ 0.000 KWD</b></div>
+    <div class="row" style="color:#dc2626"><span>Absent + Sick Deduction:</span><b id="rDed">- 0.000 KWD</b></div>
+    <div class="tot"><span>Net Salary:</span><b id="rNet">210.000 KWD</b></div>
+    <div class="tot" style="background:#eff6ff;border-color:#93c5fd;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><span>Convert Net Salary To:</span><select id="targetCurrencyInp" aria-label="Convert salary to currency" onchange="saveTargetCurrency()" style="max-width:150px;padding:7px;border:1px solid #93c5fd;border-radius:8px;background:#fff;color:#1d4ed8;font-weight:800"><option value="INR">INR — Indian Rupee</option></select><b id="rNetInr" style="color:#1d4ed8">Loading…</b></div>
+    <div class="note" id="sickNote">Kuwait sick-leave estimate: first 15 days full pay, next 10 at 75%, next 10 at 50%, next 10 at 25%, next 30 unpaid. The app counts marked sick days by calendar year.</div>
+  </div>
+  <div class="app-footer">
+    <h2>App Actions</h2>
+    <p>Share one common app link or QR code. Anyone opening it can use the web app or download the Android APK here.</p>
+    <div class="footer-actions">
+      <button type="button" class="footer-action primary" onclick="openSharePanel()">🔗 Share App / QR Code</button>
+      <button type="button" class="footer-action green" onclick="downloadAppApk()">⬇ Download Android APK</button>
+      <button type="button" class="footer-action" onclick="shareApkLink()">📤 Share Direct APK Link</button>
+      <button type="button" class="footer-action" onclick="openAppBrowser()">🌐 Open Web App in Browser</button>
+      <button type="button" class="footer-action" onclick="printSalarySlip()">🧾 Print Salary Slip / Save PDF</button>
+      <button type="button" class="footer-action" onclick="printMonthlyReport()">📅 Monthly Attendance &amp; Salary Report</button>
+    </div>
+
+  </div>
+  <section class="app-footer" aria-labelledby="feedbackTitle">
+    <h2 id="feedbackTitle">Help &amp; Feedback</h2>
+    <p>Found a calculation error or have a suggestion? Contact us on WhatsApp.</p>
+    <div class="footer-actions">
+      <button type="button" class="footer-action green" style="grid-column:1/-1" onclick="openFeedbackWhatsApp()">💬 Contact on WhatsApp</button>
+    </div>
+  </section>
+</div>
+<div class="modal-bg" id="modal"><div class="modal">
+  <div style="font-weight:800;font-size:1.05rem" id="mDate">Date</div>
+  <div class="sgrid">
+    <div class="sbtn present" onclick="selSt('present')">&#10004; Present</div><div class="sbtn absent" onclick="selSt('absent')">&#10006; Absent</div>
+    <div class="sbtn friday" onclick="selSt('friday')">&#9733; Friday</div><div class="sbtn holiday" onclick="selSt('holiday')">&#9733; Holiday</div>
+    <div class="sbtn sick" onclick="selSt('sick')">✚ Sick Leave</div>
+    <div class="sbtn none" onclick="selSt('none')">Clear / Blank</div>
+  </div>
+  <div id="hrBox" class="inp"><label id="hrLbl">Overtime Hours:</label><input type="number" id="hrInp" value="0" min="0" max="24" step="0.5">
+    <div class="chips"><button class="chip" onclick="setH(0)">0h</button><button class="chip" onclick="setH(1)">+1h</button><button class="chip" onclick="setH(2)">+2h</button><button class="chip" onclick="setH(3)">+3h</button><button class="chip" onclick="setH(4)">+4h</button><button class="chip" onclick="setH(8)">8h</button><button class="chip" onclick="setH(10)">10h</button></div>
+  </div>
+  <div class="mact"><button class="bcan" onclick="closeM()">Cancel</button><button class="bsave" onclick="saveDay()">Save Entry</button></div>
+</div></div>
+<!-- Share App / QR modal -->
+<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle" onclick="if(event.target===this)closeSharePanel()">
+  <div class="share-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 class="share-title" id="shareTitle">Share Gulf Duty &amp; Salary Pro</h2><button class="share-action" type="button" onclick="closeSharePanel()" aria-label="Close">✕</button></div>
+    <p class="share-desc">The shared link and QR code open the common app page. From there, users can open the web app or download the Android APK.</p>
+    <div class="qr-box"><div id="appQr" aria-label="QR code for app link"></div></div>
+    <div class="share-actions">
+      <button class="share-action primary" type="button" onclick="shareAppLink()">Share App Link</button>
+      <button class="share-action" type="button" onclick="copyAppLink()">Copy Link</button>
+      <button class="share-action green" type="button" onclick="downloadQrImage()">Save QR Image</button>
+      <button class="share-action" type="button" onclick="shareQrImage()">Share QR Image</button>
+      <button class="share-action primary" type="button" onclick="openAppBrowser()">Open Web App in Browser</button>
+      <button class="share-action green" type="button" onclick="downloadAppApk()">Download Android APK</button>
+      <button class="share-action" type="button" onclick="shareApkLink()">Share Direct APK Link</button>
+    </div>
+    <p class="share-foot">QR code and app link open the common app page. The direct APK option links to the published Android release.</p>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script>
+let dt=new Date(),y=dt.getFullYear(),m=dt.getMonth(),selKey=null,tSt='present',qMode='edit';
+let db=JSON.parse(localStorage.getItem('gulf_att_v5')||'{}');
+let cfg=JSON.parse(localStorage.getItem('gulf_cfg_v5')||'{"basic":0,"allow":0,"base":26,"mode":"earned","currency":"KWD"}');
+// One-time migration: remove the old demo default (210 KD) so the user enters their own salary.
+if(!localStorage.getItem('gulf_cfg_zero_default_v1')){if(Number(cfg.basic)===210){cfg.basic=0;}localStorage.setItem('gulf_cfg_zero_default_v1','1');localStorage.setItem('gulf_cfg_v5',JSON.stringify(cfg));}
+cfg.currency=cfg.currency||'KWD';
+let fxRate=null, fxUpdatedAt='', fxLoading=false;
+let fxRatesByCode={};
+const targetCurrencyKey='gulf_salary_target_currency_v1';
+const employeeNameInput=document.getElementById('employeeNameInp');
+const employeeIdInput=document.getElementById('employeeIdInp');
+employeeNameInput.value=localStorage.getItem('gulf_employee_name_v1')||'';
+employeeIdInput.value=localStorage.getItem('gulf_employee_id_v1')||'';
+employeeNameInput.addEventListener('change',()=>localStorage.setItem('gulf_employee_name_v1',employeeNameInput.value.trim()));
+employeeIdInput.addEventListener('change',()=>localStorage.setItem('gulf_employee_id_v1',employeeIdInput.value.trim()));
+
+const currencyNames={KWD:'Kuwait Dinar',SAR:'Saudi Riyal',AED:'UAE Dirham',QAR:'Qatari Riyal',OMR:'Omani Rial',BHD:'Bahraini Dinar'};
+const fxCacheKey='gulf_fx_cache_v1';
+document.getElementById('currencyInp').value=cfg.currency;
+const targetCurrencySelect=document.getElementById('targetCurrencyInp');
+if(targetCurrencySelect){targetCurrencySelect.value=localStorage.getItem('gulf_salary_target_currency_v1')||'INR';}
+document.getElementById('basicLabel').innerText='Basic ('+cfg.currency+')';
+document.getElementById('allowLabel').innerText='Allowance ('+cfg.currency+')';
+document.getElementById('basicInp').value=cfg.basic;
+document.getElementById('allowInp').value=cfg.allow||0;
+document.getElementById('baseInp').value=cfg.base;
+cfg.mode='earned';
+document.getElementById('modeInp').value='earned';
+
+function saveCfg(){
+  cfg.basic=Math.max(0,parseFloat(document.getElementById('basicInp').value)||0);
+  cfg.allow=parseFloat(document.getElementById('allowInp').value)||0;
+  cfg.base=26;
+  document.getElementById('baseInp').value='26';
+  cfg.mode='earned';
+  cfg.currency=document.getElementById('currencyInp').value||'KWD';
+  document.getElementById('basicLabel').innerText='Basic ('+cfg.currency+')';
+  document.getElementById('allowLabel').innerText='Allowance ('+cfg.currency+')';
+  localStorage.setItem('gulf_cfg_v5',JSON.stringify(cfg));render();
+  loadFxRate();
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(err => console.log('Offline cache setup failed', err))); }
+}
+function setMode(md){
+  qMode=md;
+  ['edit','present','absent','none'].forEach(k=>document.getElementById('m-'+k).className='qbtn'+(k===md?' act-'+k:''));
+  let lbl={edit:'Detailed OT Mode',present:'Quick Present Mode',absent:'Quick Absent Mode',none:'Quick Clear Mode'};
+  document.getElementById('modeBadge').innerText=lbl[md];
+}
+function chgM(d){m+=d;if(m<0){m=11;y--}if(m>11){m=0;y++}render()}
+function defSt(yr,mo,da){return 'none'}
+// Country-specific private-sector sick-leave pay tiers. These are estimates;
+// eligibility, medical certification, employer policy and the applicable leave-year can affect entitlement.
+const sickLeaveRules={
+  KWD:{name:'Kuwait',tiers:[[15,1],[25,.75],[35,.50],[45,.25],[75,0]],summary:'15 days full pay, next 10 at 75%, next 10 at 50%, next 10 at 25%, next 30 unpaid.'},
+  SAR:{name:'Saudi Arabia',tiers:[[30,1],[90,.75],[120,0]],summary:'first 30 days full pay, next 60 at 75%, next 30 unpaid.'},
+  AED:{name:'UAE',tiers:[[15,1],[45,.50],[90,0]],summary:'first 15 days full pay, next 30 at half pay, next 45 unpaid (after probation).'},
+  QAR:{name:'Qatar',tiers:[[14,1],[42,.50],[84,0]],summary:'first 2 weeks full pay, next 4 weeks at half pay, further sick leave unpaid.'},
+  OMR:{name:'Oman',tiers:[[21,1],[35,.75],[70,.50],[182,.35]],summary:'first 21 days full pay, next 14 at 75%, next 35 at 50%, days 71–182 at 35%.'},
+  BHD:{name:'Bahrain',tiers:[[15,1],[35,.50],[55,0]],summary:'15 days full pay, next 20 at half pay, next 20 unpaid.'}
+};
+function sickTierFraction(index){
+  const rule=sickLeaveRules[cfg.currency||'KWD']||sickLeaveRules.KWD;
+  for(const [lastDay,fraction] of rule.tiers){if(index<=lastDay)return fraction;}
+  return 0;
+}
+function updateSickLeaveNote(){
+  const code=cfg.currency||'KWD',rule=sickLeaveRules[code]||sickLeaveRules.KWD;
+  const tag=document.getElementById('countrySickTag');
+  if(tag)tag.textContent=rule.name.toUpperCase()+' SICK LEAVE ESTIMATE';
+  const note=document.getElementById('sickNote');
+  if(note)note.textContent=rule.name+' sick-leave estimate: '+rule.summary+' This estimate counts marked sick days by calendar year; the legal entitlement year and eligibility conditions may differ. Verify with HR / the applicable labour authority.';
+}
+function getSickFractionForKey(key){
+  let [yr,mo,day]=key.split('-').map(Number), prior=0;
+  Object.keys(db).forEach(k=>{
+    if(k===key)return;
+    let parts=k.split('-').map(Number);
+    if(parts.length===3 && parts[0]===yr && db[k] && db[k].status==='sick' &&
+       (parts[1]<mo || (parts[1]===mo && parts[2]<day))) prior++;
+  });
+  return sickTierFraction(prior+1);
+}
+
+// App sharing: standalone UI only; salary and attendance calculations remain unchanged.
+const APP_BROWSER_URL = 'https://fabrication4man-bot.github.io/Salary-Calculator-App/';
+const APP_APK_URL = 'https://github.com/fabrication4man-bot/Salary-Calculator-App/releases/download/v1.0.0/Gulf.Salary.apk';
+let appQrReady = false;
+function openSharePanel(){
+  document.getElementById('shareModal').style.display='flex';
+  renderAppQr();
+}
+function renderAppQr(){
+  const qrTarget=document.getElementById('appQr');
+  if(!qrTarget)return;
+  if(qrTarget.querySelector('canvas, img'))return;
+  if(window.QRCode){
+    qrTarget.innerHTML='';
+    new QRCode(qrTarget,{text:APP_BROWSER_URL,width:196,height:196,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+  }else{
+    qrTarget.innerHTML='<p style="max-width:230px;text-align:center;font-size:.8rem;color:#b91c1c">QR library load nahi hui. Internet connection check karke page reload karein.</p>';
+  }
+}
+function closeSharePanel(){document.getElementById('shareModal').style.display='none'}
+function openAppBrowser(){window.open(APP_BROWSER_URL,'_blank','noopener')}
+function downloadAppApk(){window.open(APP_APK_URL,'_blank','noopener')}
+async function copyAppLink(){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){await navigator.clipboard.writeText(APP_BROWSER_URL);alert('App link copied. Ab WhatsApp ya kisi app mein paste kar dein.');}
+    else{window.prompt('Copy this app link:',APP_BROWSER_URL);}
+  }catch(e){window.prompt('Copy this app link:',APP_BROWSER_URL);}
+}
+async function shareAppLink(){
+  const shareData={title:'Gulf Duty & Salary App',text:'Gulf Duty & Salary App — open the web app in your browser or use the Download Android APK option on the app page:',url:APP_BROWSER_URL};
+  try{
+    if(navigator.share){await navigator.share(shareData);}
+    else if(navigator.clipboard && navigator.clipboard.writeText){await navigator.clipboard.writeText(APP_BROWSER_URL);alert('App link copied. Ab WhatsApp ya kisi app mein paste kar dein.');}
+    else{window.prompt('Copy this app link:',APP_BROWSER_URL);}
+  }catch(e){if(e.name!=='AbortError')window.prompt('Copy this app link:',APP_BROWSER_URL);}
+}
+async function shareApkLink(){
+  const shareData={title:'Gulf Duty & Salary App — Android APK',text:'Download the Gulf Duty & Salary Android APK directly:',url:APP_APK_URL};
+  try{
+    if(navigator.share){await navigator.share(shareData);}
+    else if(navigator.clipboard && navigator.clipboard.writeText){await navigator.clipboard.writeText(APP_APK_URL);alert('Direct APK link copied. Ab WhatsApp ya kisi app mein paste kar dein.');}
+    else{window.prompt('Copy this direct APK link:',APP_APK_URL);}
+  }catch(e){if(e.name!=='AbortError')window.prompt('Copy this direct APK link:',APP_APK_URL);}
+}
+function getQrCanvas(){
+  const qr=document.getElementById('appQr');
+  if(!qr)return null;
+  let canvas=qr.querySelector('canvas');
+  if(canvas)return canvas;
+  const img=qr.querySelector('img');
+  if(img && img.complete && img.naturalWidth){
+    const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+    const ctx=c.getContext('2d');ctx.drawImage(img,0,0);return c;
+  }
+  return null;
+}
+function downloadQrImage(){
+  const canvas=getQrCanvas();
+  if(!canvas){alert('QR Code abhi ready nahi hai. Thodi der baad try karein.');return;}
+  const a=document.createElement('a');a.download='Gulf-Duty-Salary-App-QR.png';a.href=canvas.toDataURL('image/png');a.click();
+}
+async function shareQrImage(){
+  const canvas=getQrCanvas();
+  if(!canvas){alert('QR Code abhi ready nahi hai. Thodi der baad try karein.');return;}
+  canvas.toBlob(async blob=>{
+    if(!blob){alert('QR image tayyar nahi ho paayi. Save QR Image try karein.');return;}
+    const file=new File([blob],'Gulf-Duty-Salary-App-QR.png',{type:'image/png'});
+    try{
+      if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+        await navigator.share({title:'Gulf Duty & Salary App QR Code',text:'Scan this QR code to open Gulf Duty & Salary App.',files:[file]});
+      }else{
+        downloadQrImage();
+        alert('QR image download ho gayi. Ab Gallery se WhatsApp ya kisi aur app par share kar dein.');
+      }
+    }catch(e){if(e.name!=='AbortError'){downloadQrImage();}}
+  },'image/png');
+}
+
+function openFeedbackWhatsApp(){
+  const message =
+    'Hello, I have feedback about Gulf Duty & Salary Pro.\\n\\n' +
+    'Feedback type: Calculation Error / Suggestion / Other\\n\\n' +
+    'Details:';
+  const url = 'https://wa.me/96556594786?text=' + encodeURIComponent(message);
+  window.open(url, '_blank', 'noopener');
+}
+
+function escPrint(s){
+  return String(s==null?'':s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function getMonthReportData(){
+  const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const totalDays=new Date(y,m+1,0).getDate();
+  const cur=cfg.currency||'KWD';
+  const dr=Number(cfg.basic||0)/26, hr=dr/8, daily=Number(cfg.basic||0)/30, absentDaily=Number(cfg.basic||0)/26;
+  let present=0,absent=0,fridays=0,sick=0,normalOT=0,fridayOT=0,holidayOT=0,sickDed=0,sickEarn=0,hasEntries=false;
+  const rows=[];
+  for(let day=1;day<=totalDays;day++){
+    const key=`${y}-${m+1}-${day}`;
+    const r=db[key]||{status:'none',hours:0};
+    const status=r.status||'none', hours=Number(r.hours||0);
+    if(status!=='none')hasEntries=true;
+    if(status==='present'){present++;normalOT+=hours;}
+    else if(status==='absent'){absent++;}
+    else if(status==='friday'){fridays++;fridayOT+=hours;}
+    else if(status==='holiday'){present++;holidayOT+=hours;}
+    else if(status==='sick'){
+      sick++;
+      const frac=getSickFractionForKey(key);
+      sickDed+=daily*(1-frac); sickEarn+=daily*frac;
+    }
+    const labels={present:'Present',absent:'Absent',friday:'Friday Duty',holiday:'Holiday Duty',sick:'Sick Leave',none:'Blank / Not Marked'};
+    rows.push({day,status:labels[status]||status,hours:(hours>0?hours+' h':'—')});
+  }
+  const normalPay=normalOT*hr*1.25, fridayPay=fridayOT*hr*1.5, holidayPay=holidayOT*hr*2;
+  const basicDutyDays=present;
+  const allowance=(Number(cfg.allow||0)/26)*basicDutyDays;
+  const net=hasEntries?Math.max(0,(basicDutyDays*dr)+sickEarn+allowance+normalPay+fridayPay+holidayPay):0;
+  return {monthName:monthNames[m],year:y,totalDays,cur,dr,hr,present,absent,fridays,sick,normalOT,fridayOT,holidayOT,normalPay,fridayPay,holidayPay,sickDed,sickEarn,allowance,net,rows};
+}
+function printDocument(title,bodyHtml){
+  const win=window.open('','_blank');
+  if(!win){alert('Print window open nahi hui. Browser settings mein pop-ups allow karke dobara try karein.');return;}
+  win.document.open();
+  win.document.write(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escPrint(title)}</title>
+  <style>
+  *{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111827;margin:24px;font-size:12px}
+  h1{font-size:21px;margin:0 0 5px}h2{font-size:15px;margin:20px 0 8px}
+  .sub{color:#4b5563;margin-bottom:18px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+  .meta div,.metric{border:1px solid #d1d5db;padding:8px;border-radius:6px}
+  table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #d1d5db;padding:6px;text-align:left}th{background:#f3f4f6}
+  .money td:last-child{text-align:right;font-variant-numeric:tabular-nums}.total{font-size:16px;font-weight:bold;background:#ecfdf5}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.label{color:#4b5563;font-size:10px}.value{font-size:14px;font-weight:bold;margin-top:4px}
+  .foot{margin-top:22px;color:#6b7280;font-size:10px}
+  .actions{margin-bottom:16px}.actions button{padding:9px 14px;margin-right:8px}
+  @media print{body{margin:10mm}.actions{display:none}thead{display:table-header-group}tr{break-inside:avoid}}
+  </style></head><body><div class="actions"><button onclick="window.print()">Print / Save PDF</button><button onclick="window.close()">Close</button></div>${bodyHtml}
+  <div class="foot">Generated by Gulf Duty &amp; Salary App. Please verify entries before payroll processing.</div>
+  <script>window.onload=()=>setTimeout(()=>{try{window.focus()}catch(e){}},250);<\/script></body></html>`);
+  win.document.close();
+}
+function employeeMetaHtml(){
+  const name=(document.getElementById('employeeNameInp').value||'').trim();
+  const id=(document.getElementById('employeeIdInp').value||'').trim();
+  localStorage.setItem('gulf_employee_name_v1',name);
+  localStorage.setItem('gulf_employee_id_v1',id);
+  return `<div class="meta"><div><b>Employee Name:</b> ${escPrint(name||'Not entered')}</div><div><b>Employee ID:</b> ${escPrint(id||'Not entered')}</div><div><b>Basic Salary:</b> ${Number(cfg.basic||0).toFixed(3)} ${escPrint(cfg.currency||'KWD')}</div><div><b>Allowance (monthly):</b> ${Number(cfg.allow||0).toFixed(3)} ${escPrint(cfg.currency||'KWD')}</div></div>`;
+}
+function printSalarySlip(){
+  const d=getMonthReportData(), cur=escPrint(d.cur);
+  const body=`<h1>Gulf Duty &amp; Salary Pro</h1><div class="sub">Individual Salary Slip — ${escPrint(d.monthName)} ${d.year}</div>
+  ${employeeMetaHtml()}
+  <div class="metrics">
+    <div class="metric"><div class="label">Present / Holiday Duty Days</div><div class="value">${d.present}</div></div>
+    <div class="metric"><div class="label">Absent Days</div><div class="value">${d.absent}</div></div>
+    <div class="metric"><div class="label">Sick Leave Days</div><div class="value">${d.sick}</div></div>
+  </div>
+  <h2>Salary Breakdown</h2><table class="money"><thead><tr><th>Description</th><th>Amount (${cur})</th></tr></thead><tbody>
+  <tr><td>Basic earned (${d.present} duty days × daily rate ${d.dr.toFixed(3)})</td><td>${(d.present*d.dr).toFixed(3)}</td></tr>
+  <tr><td>Earned allowance</td><td>${d.allowance.toFixed(3)}</td></tr>
+  <tr><td>Normal OT — ${d.normalOT} h × 1.25</td><td>${d.normalPay.toFixed(3)}</td></tr>
+  <tr><td>Friday duty OT — ${d.fridayOT} h × 1.50</td><td>${d.fridayPay.toFixed(3)}</td></tr>
+  <tr><td>Holiday duty OT — ${d.holidayOT} h × 2.00</td><td>${d.holidayPay.toFixed(3)}</td></tr>
+  <tr><td>Sick leave pay earned</td><td>${d.sickEarn.toFixed(3)}</td></tr>
+  <tr><td>Sick leave deduction estimate</td><td>-${d.sickDed.toFixed(3)}</td></tr>
+  <tr class="total"><td>NET SALARY</td><td>${d.net.toFixed(3)} ${cur}</td></tr>
+  </tbody></table><p><b>Daily rate:</b> ${d.dr.toFixed(3)} ${cur} &nbsp; | &nbsp; <b>Hourly rate:</b> ${d.hr.toFixed(3)} ${cur}</p>`;
+  printDocument(`Salary Slip ${d.monthName} ${d.year}`,body);
+}
+function printMonthlyReport(){
+  const d=getMonthReportData(),cur=escPrint(d.cur);
+  const rows=d.rows.map(r=>`<tr><td>${r.day}</td><td>${escPrint(r.status)}</td><td>${escPrint(r.hours)}</td></tr>`).join('');
+  const body=`<h1>Gulf Duty &amp; Salary Pro</h1><div class="sub">Monthly Attendance &amp; Salary Report — ${escPrint(d.monthName)} ${d.year}</div>
+  ${employeeMetaHtml()}
+  <div class="metrics">
+    <div class="metric"><div class="label">Present / Holiday Duty</div><div class="value">${d.present} days</div></div>
+    <div class="metric"><div class="label">Absent</div><div class="value">${d.absent} days</div></div>
+    <div class="metric"><div class="label">Friday Duty</div><div class="value">${d.fridays} days</div></div>
+  </div>
+  <h2>Daily Attendance</h2><table><thead><tr><th>Day</th><th>Attendance Status</th><th>OT / Duty Hours</th></tr></thead><tbody>${rows}</tbody></table>
+  <h2>Monthly Salary Summary</h2><table class="money"><thead><tr><th>Description</th><th>Amount (${cur})</th></tr></thead><tbody>
+  <tr><td>Basic earned</td><td>${(d.present*d.dr).toFixed(3)}</td></tr>
+  <tr><td>Earned allowance</td><td>${d.allowance.toFixed(3)}</td></tr>
+  <tr><td>Normal OT pay</td><td>${d.normalPay.toFixed(3)}</td></tr>
+  <tr><td>Friday OT pay</td><td>${d.fridayPay.toFixed(3)}</td></tr>
+  <tr><td>Holiday OT pay</td><td>${d.holidayPay.toFixed(3)}</td></tr>
+  <tr><td>Sick leave pay earned</td><td>${d.sickEarn.toFixed(3)}</td></tr>
+  <tr><td>Sick leave deduction estimate</td><td>-${d.sickDed.toFixed(3)}</td></tr>
+  <tr class="total"><td>NET SALARY</td><td>${d.net.toFixed(3)} ${cur}</td></tr>
+  </tbody></table>`;
+  printDocument(`Monthly Report ${d.monthName} ${d.year}`,body);
+}
+
+
+function render(){
+  updateSickLeaveNote();
+  const g=document.getElementById('calGrid');g.innerHTML='';
+  const mn=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById('mLbl').innerText=mn[m]+' '+y;
+  ['SUN','MON','TUE','WED','THU','FRI','SAT'].forEach((d,i)=>{let e=document.createElement('div');e.className='dname'+(i===5?' fri':'');e.innerText=d;g.appendChild(e)});
+  let fd=new Date(y,m,1).getDay(),td=new Date(y,m+1,0).getDate();
+  for(let i=0;i<fd;i++){let e=document.createElement('div');e.className='cell empty';g.appendChild(e)}
+  let p=0,a=0,f=0,sl=0,not=0,fot=0,hot=0,sickDed=0,sickEarn=0,hasMonthEntries=false;
+  let dr=cfg.basic/26,hr=dr/8,daily=cfg.basic/30,absentDaily=cfg.basic/26;
+  for(let d=1;d<=td;d++){
+    let k=`${y}-${m+1}-${d}`,r=db[k]||{status:defSt(y,m,d),hours:0};
+    if(r.status && r.status!=='none')hasMonthEntries=true;
+    let c=document.createElement('div');c.className='cell '+r.status;
+    let labels={present:'P',absent:'A',friday:'FRI',holiday:'HOL',sick:'SL',none:'-'};
+    c.innerHTML=`<span>${d}</span><span class="sub">${labels[r.status]||'-'}</span>`;
+    if(r.hours>0&&r.status!=='absent'&&r.status!=='none'&&r.status!=='sick')c.innerHTML+=`<span class="otb">+${r.hours}h</span>`;
+    c.onclick=()=>tapDay(k,d,r);g.appendChild(c);
+    if(r.status==='present'){p++;not+=parseFloat(r.hours||0)}
+    else if(r.status==='absent')a++;
+    else if(r.status==='friday'){f++;fot+=parseFloat(r.hours||0)}
+    else if(r.status==='holiday'){p++;hot+=parseFloat(r.hours||0)}
+    else if(r.status==='sick'){
+      sl++;
+      let frac=getSickFractionForKey(k);
+      sickDed+=daily*(1-frac);
+      sickEarn+=daily*frac;
+    }
+  }
+  let np=not*hr*1.25,fp=fot*hr*1.5,hp=hot*hr*2,absDed=a*absentDaily;
+  let deductions=absDed+sickDed;
+  // Earned-pay rules:
+  // - Present: daily basic + normal OT (1.25x).
+  // - Friday: Friday OT only (1.5x); no basic-duty pay or daily allowance.
+  // - Holiday: daily basic + holiday OT (2x).
+  // - Sick leave: eligible sick-leave pay.
+  // Blank dates earn nothing; absence is only recorded when explicitly marked.
+  // Use explicit status counts so Friday can never enter the basic-duty total.
+  let net=0;
+  if(hasMonthEntries){
+    const basicDutyDays=p; // p counts Present and Holiday only; Friday is excluded.
+    const earnedAllowance=(cfg.allow/26)*p;
+    net=(basicDutyDays*dr)+sickEarn+earnedAllowance+np+fp+hp;
+  }
+  let finalNet=Math.max(0,net).toFixed(3);
+  const cur=cfg.currency||'KWD';
+  document.getElementById('topSal').innerText=Number(finalNet).toFixed(3)+' '+cur;
+  document.getElementById('topRate').innerText=hr.toFixed(3)+' '+cur+'/HR';
+  document.getElementById('rRate').innerText=`${dr.toFixed(3)} ${cur}/d | ${hr.toFixed(3)} ${cur}/h`;
+  document.getElementById('rAtt').innerText=`${p} Present | ${a} Absent | ${f} Fri`;
+  document.getElementById('rSick').innerText=`${sl} days | deduction ${sickDed.toFixed(3)} ${cfg.currency}`;
+  document.getElementById('rNot').innerText=`${not}h (+${np.toFixed(3)} ${cfg.currency})`;
+  document.getElementById('rFot').innerText=`${fot}h (+${fp.toFixed(3)} ${cfg.currency})`;
+  document.getElementById('rHot').innerText=`${hot}h (+${hp.toFixed(3)} ${cfg.currency})`;
+  document.getElementById('rAll').innerText=`+ ${cfg.allow.toFixed(3)} ${cfg.currency}`;
+  document.getElementById('rDed').innerText=cfg.mode==='earned'?`Earned mode; sick deduction ${sickDed.toFixed(3)} ${cfg.currency}`:`- ${deductions.toFixed(3)} ${cfg.currency}`;
+  document.getElementById('rNet').innerText=Number(finalNet).toFixed(3)+' '+cfg.currency;
+  updateInrDisplay(Number(finalNet));
+}
+function tapDay(k,d,r){
+  if(qMode!=='edit'){
+    db[k]={status:qMode,hours:qMode==='present'?(r.hours||0):0};
+    localStorage.setItem('gulf_att_v5',JSON.stringify(db));render();return;
+  }
+  selKey=k;document.getElementById('mDate').innerText=`Date: ${d}/${m+1}/${y}`;
+  document.getElementById('hrInp').value=r.hours||0;selSt(r.status);
+  document.getElementById('modal').style.display='flex';
+}
+function selSt(s){
+  tSt=s;document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('act'));
+  let chosen=document.querySelector('.sbtn.'+s);if(chosen)chosen.classList.add('act');
+  let hb=document.getElementById('hrBox'),hl=document.getElementById('hrLbl');
+  if(s==='absent'||s==='none'||s==='sick')hb.style.display='none';
+  else{hb.style.display='block';hl.innerText=s==='present'?'Extra Overtime Hours (1.25x):':s==='friday'?'Friday Duty Hours (1.5x):':'Holiday Duty Hours (2.0x):';}
+}
+function setH(v){document.getElementById('hrInp').value=v}
+function closeM(){document.getElementById('modal').style.display='none'}
+function saveDay(){
+  let h=(tSt==='absent'||tSt==='none'||tSt==='sick')?0:(parseFloat(document.getElementById('hrInp').value)||0);
+  db[selKey]={status:tSt,hours:h};localStorage.setItem('gulf_att_v5',JSON.stringify(db));
+  closeM();render();
+}
+render();
+loadFxRate();
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(err => console.log('Offline cache setup failed', err))); }
+
+function saveTargetCurrency(){
+  const el=document.getElementById('targetCurrencyInp');
+  if(el)localStorage.setItem(targetCurrencyKey,el.value||'INR');
+  render();
+}
+function populateTargetCurrencies(rates){
+  const el=document.getElementById('targetCurrencyInp');
+  if(!el||!rates)return;
+  const current=localStorage.getItem(targetCurrencyKey)||el.value||'INR';
+  const codes=Object.keys(rates).filter(c=>/^[A-Z]{3}$/.test(c)).sort();
+  const preferred=['INR','KWD','SAR','AED','QAR','OMR','BHD','USD','EUR','GBP'];
+  const ordered=[...preferred.filter(c=>codes.includes(c)),...codes.filter(c=>!preferred.includes(c))];
+  el.innerHTML='';
+  ordered.forEach(code=>{
+    const opt=document.createElement('option');opt.value=code;opt.textContent=code+' — '+(new Intl.DisplayNames(['en'],{type:'currency'}).of(code)||code);el.appendChild(opt);
+  });
+  el.value=codes.includes(current)?current:(codes.includes('INR')?'INR':(codes[0]||''));
+  localStorage.setItem(targetCurrencyKey,el.value);
+}
+function updateInrDisplay(net){
+  const out=document.getElementById('rNetInr');
+  const target=document.getElementById('targetCurrencyInp')?.value||'INR';
+  const rate=Number(fxRatesByCode[target]);
+  if(Number.isFinite(net)&&Number.isFinite(rate)&&rate>0){
+    try{out.innerText=new Intl.NumberFormat('en-US',{style:'currency',currency:target,maximumFractionDigits:2}).format(net*rate);}
+    catch(e){out.innerText=(net*rate).toFixed(2)+' '+target;}
+  }else out.innerText='Rate unavailable';
+}
+async function loadFxRate(){
+  const cur=cfg.currency||'KWD';
+  const rateEl=document.getElementById('fxRate'), updEl=document.getElementById('fxUpdated');
+  rateEl.innerText='Fetching latest '+cur+' rates…';
+  document.getElementById('rNetInr').innerText='Loading rate…';
+  updEl.innerText='Loading currency rates for the selected salary currency.';
+  try{
+    const response=await fetch('https://open.er-api.com/v6/latest/'+encodeURIComponent(cur),{cache:'no-store'});
+    if(!response.ok) throw new Error('Rate service unavailable');
+    const data=await response.json();
+    if(data.result!=='success'||!data.rates||!Number.isFinite(Number(data.rates.INR))) throw new Error('Invalid exchange rate');
+    fxRatesByCode=data.rates;fxRate=Number(data.rates.INR);fxUpdatedAt=data.time_last_update_utc||'Latest available';
+    try{localStorage.setItem(fxCacheKey,JSON.stringify({currency:cur,rates:fxRatesByCode,rate:fxRate,updated:fxUpdatedAt,ts:Date.now()}));}catch(e){}
+    populateTargetCurrencies(fxRatesByCode);
+    rateEl.innerText='1 '+cur+' = ₹ '+fxRate.toLocaleString('en-IN',{maximumFractionDigits:4});
+    updEl.innerText='Rates updated: '+fxUpdatedAt+' (provider daily rates; bank/remittance rates may differ).';
+    render();
+  }catch(err){
+    let cached=null;try{cached=JSON.parse(localStorage.getItem(fxCacheKey)||'null')}catch(e){}
+    if(cached&&cached.currency===cur&&cached.rates&&Number.isFinite(Number(cached.rates.INR))){
+      fxRatesByCode=cached.rates;fxRate=Number(cached.rates.INR);fxUpdatedAt=cached.updated||'Saved rate';populateTargetCurrencies(fxRatesByCode);
+      rateEl.innerText='1 '+cur+' = ₹ '+fxRate.toLocaleString('en-IN',{maximumFractionDigits:4})+' (saved rate)';
+      updEl.innerText='Internet rate could not be refreshed. Showing saved rates from '+fxUpdatedAt+'.';render();
+    }else{
+      fxRatesByCode={};fxRate=null;rateEl.innerText='Rate unavailable';updEl.innerText='Connect to the internet to load worldwide currency rates.';document.getElementById('rNetInr').innerText='Rate unavailable';
+    }
+  }
+}
+
+</script>
+</body>
+</html>
