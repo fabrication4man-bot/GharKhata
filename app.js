@@ -1,173 +1,36 @@
-
-const subcategoryMap = {
-  groceries: [
-    ['Flour / rice / lentils', 'आटा / चावल / दाल'],
-    ['Oil / spices', 'तेल / मसाले'],
-    ['Vegetables / fruit', 'सब्ज़ी / फल'],
-    ['Snacks / packaged food', 'नाश्ता / पैक्ड फूड'],
-    ['Cleaning supplies', 'सफाई का सामान'],
-    ['Other groceries', 'अन्य किराना']
-  ],
-  utilities: [
-    ['Electricity bill', 'बिजली बिल'],
-    ['Water bill', 'पानी बिल'],
-    ['Gas cylinder', 'गैस सिलेंडर'],
-    ['Internet / Wi-Fi', 'इंटरनेट / Wi-Fi'],
-    ['Mobile recharge', 'मोबाइल रिचार्ज'],
-    ['OTT / subscriptions', 'OTT / सब्सक्रिप्शन'],
-    ['Other bills', 'अन्य बिल']
-  ],
-  rent: [
-    ['House rent', 'घर का किराया'],
-    ['Other rent', 'अन्य किराया']
-  ],
-  education: [
-    ['School fees', 'स्कूल फीस'],
-    ['Books / stationery', 'किताबें / स्टेशनरी'],
-    ['Uniform', 'यूनिफॉर्म'],
-    ['School trip', 'स्कूल ट्रिप'],
-    ['Events / functions', 'कार्यक्रम / फंक्शन'],
-    ['Other education expenses', 'अन्य शिक्षा खर्च']
-  ],
-  health: [
-    ['Doctor fee', 'डॉक्टर फीस'],
-    ['Hospital', 'अस्पताल'],
-    ['Medicines', 'दवाइयाँ'],
-    ['Tests / lab tests', 'जाँच / लैब टेस्ट'],
-    ['Eyeglasses', 'चश्मा'],
-    ['Medical emergency', 'मेडिकल इमरजेंसी'],
-    ['Other health expenses', 'अन्य स्वास्थ्य खर्च']
-  ],
-  transport: [
-    ['Petrol', 'पेट्रोल'],
-    ['Diesel', 'डीज़ल'],
-    ['Bus / train', 'बस / ट्रेन'],
-    ['Taxi', 'टैक्सी'],
-    ['Parking / toll', 'पार्किंग / टोल'],
-    ['Other travel', 'अन्य यात्रा']
-  ],
-  shopping: [
-    ['Online shopping', 'ऑनलाइन खरीदारी'],
-    ['Clothes / shoes', 'कपड़े / जूते'],
-    ['Household items', 'घर का सामान'],
-    ['Electronics', 'इलेक्ट्रॉनिक्स'],
-    ['Other shopping', 'अन्य खरीदारी']
-  ],
-  personal: [
-    ['Pocket money', 'जेब खर्च'],
-    ['Personal care', 'व्यक्तिगत देखभाल'],
-    ['Entertainment', 'मनोरंजन'],
-    ['Other personal expenses', 'अन्य व्यक्तिगत खर्च']
-  ],
-  farmingCategory: [
-    ['Seeds / fertilizer', 'बीज / खाद'],
-    ['Irrigation', 'सिंचाई'],
-    ['Labour', 'मजदूरी'],
-    ['Diesel', 'डीज़ल'],
-    ['Machinery', 'मशीनरी'],
-    ['Other farming expenses', 'अन्य खेती खर्च']
-  ],
-  livestock: [
-    ['Animal feed', 'पशु चारा'],
-    ['Veterinary care', 'पशु चिकित्सा'],
-    ['Milk production', 'दूध उत्पादन'],
-    ['Other livestock expenses', 'अन्य पशुपालन खर्च']
-  ],
-  insurance: [
-    ['Health insurance', 'स्वास्थ्य बीमा'],
-    ['Vehicle insurance', 'वाहन बीमा'],
-    ['Other insurance', 'अन्य बीमा']
-  ],
-  food: [
-    ['Tea / snacks', 'चाय / नाश्ता'],
-    ['Restaurant', 'रेस्टोरेंट'],
-    ['Delivery', 'डिलीवरी'],
-    ['Other food', 'अन्य भोजन']
-  ],
-  gifts: [
-    ['Gifts', 'उपहार'],
-    ['Wedding / ceremony', 'शादी / समारोह'],
-    ['Festivals', 'त्योहार']
-  ],
-  miscellaneous: [
-    ['Small expense', 'छोटा खर्च'],
-    ['Unexpected expense', 'अचानक खर्च'],
-    ['Tea / snacks', 'चाय / नाश्ता'],
-    ['Other expenses', 'अन्य खर्च']
-  ],
-  homeCategory: [
-    ['Groceries', 'किराना'],
-    ['Milk / dairy', 'दूध / डेयरी'],
-    ['Water', 'पानी'],
-    ['Internet / Wi-Fi', 'इंटरनेट / Wi-Fi'],
-    ['Gas', 'गैस'],
-    ['Electricity', 'बिजली'],
-    ['Home maintenance', 'घर का रखरखाव'],
-    ['Other shared expenses', 'अन्य साझा खर्च']
-  ],
-  maintenance: [
-    ['Bike petrol', 'बाइक पेट्रोल'],
-    ['Car petrol / diesel', 'कार पेट्रोल / डीज़ल'],
-    ['Tractor diesel', 'ट्रैक्टर डीज़ल'],
-    ['Servicing', 'सर्विसिंग'],
-    ['Engine oil / grease', 'इंजन ऑयल / ग्रीस'],
-    ['Tyres', 'टायर'],
-    ['Spare parts', 'स्पेयर पार्ट्स'],
-    ['Repairs', 'मरम्मत'],
-    ['Insurance', 'बीमा'],
-    ['Laptop', 'लैपटॉप'],
-    ['Electronics', 'इलेक्ट्रॉनिक्स'],
-    ['Other machinery', 'अन्य मशीनरी']
-  ],
-  pocketExpense: [
-    ['Personal pocket money', 'व्यक्तिगत जेब खर्च'],
-    ['Snacks / tea', 'नाश्ता / चाय'],
-    ['Personal shopping', 'व्यक्तिगत खरीदारी'],
-    ['Entertainment', 'मनोरंजन'],
-    ['Other pocket expenses', 'अन्य पॉकेट खर्च']
-  ],
-  ecommerce: [
-    ['Amazon', 'Amazon'],
-    ['Flipkart', 'Flipkart'],
-    ['Myntra', 'Myntra'],
-    ['Other platform', 'अन्य प्लेटफ़ॉर्म'],
-    ['Delivery charge', 'डिलीवरी चार्ज'],
-    ['Return / refund', 'रिटर्न / रिफंड']
-  ],
-  savings: [
-    ['Emergency fund', 'आपातकालीन फंड'],
-    ['Fixed deposit', 'फिक्स्ड डिपॉज़िट'],
-    ['Investment', 'निवेश'],
-    ['Other savings', 'अन्य बचत']
-  ],
-  subscriptions: [
-    ['Streaming service', 'स्ट्रीमिंग सेवा'],
-    ['Mobile / internet plan', 'मोबाइल / इंटरनेट प्लान'],
-    ['Software / app', 'सॉफ्टवेयर / ऐप'],
-    ['Other subscription', 'अन्य सब्सक्रिप्शन']
-  ],
-  other: [
-    ['Other expenses', 'अन्य खर्च']
-  ]
+/* Household Expense Manager — local-first MVP. No PIN or cloud sync. */
+const DB_NAME='HouseholdExpenseManagerDB', DB_VERSION=2;
+let db, state={lang:localStorage.getItem('hem_lang')||'en',editing:null,modalKind:null,modalExtra:null,backupReminder:localStorage.getItem('hem_backup_reminder')!=='false',lastBackup:localStorage.getItem('hem_last_backup')||''};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const dict={
+ en:{appName:'Household Manager',tagline:'Your family finances, in one place',overview:'OVERVIEW',goodDay:'Your household at a glance',addEntry:'Add entry',netBalance:'Tracked account balance',localOnly:'Local only',income:'Income',expense:'Expense',atAGlance:'At a glance',viewReports:'View reports →',thisMonthIncome:"This month's income",thisMonthExpense:"This month's expenses",accounts:'Accounts',upcoming:'Upcoming reminders',recentActivity:'Recent activity',seeAll:'See all →',quickActions:'Quick actions',addExpense:'Add expense',addIncome:'Add income',manageAccounts:'Manage accounts',backupRestore:'Backup & restore',yourRecords:'YOUR RECORDS',transactions:'Transactions',addNew:'Add new',searchRecords:'Search records…',allTypes:'All types',transfer:'Transfer',loanGiven:'Loan given',loanTaken:'Loan taken',repayment:'Repayment',farmDesk:'FARM DESK',farming:'Farming',addFarmRecord:'Add record',farmTracking:'Track each crop season',farmTrackingDesc:'Record field work, inputs, labour and crop or milk income.',farmCosts:'Recorded farm costs',farmIncome:'Farm income',farmRecords:'Farm records',moneyPlaces:'MONEY PLACES',addAccount:'Add account',accountHint:'Keep cash, bank accounts, UPI wallets and cards separate.',patterns:'PATTERNS & PLANS',reportsBudget:'Reports & budget',reportMonth:'Report month',exportCsv:'Export CSV',net:'Net',spendingCategories:'Spending categories',monthlyBudgets:'Monthly budgets',setBudget:'＋ Set budget',reminders:'Reminders',addReminder:'＋ Add reminder',peopleAndPurpose:'PEOPLE & PURPOSE',familyMembers:'Family & members',addMember:'Add member',familyHint:'Tag entries to a family member, child or person who received money.',categories:'Categories',addCategory:'＋ Add category',yourData:'YOUR DATA',backupImportant:'Your data stays on this device',backupImportantDesc:'Clearing browser data or losing your phone can erase records. Export a backup regularly.',createBackup:'Create backup',createBackupDesc:'Save all records, accounts, budgets, reminders and settings in a JSON file.',downloadBackup:'Download backup',restoreBackup:'Restore backup',restoreBackupDesc:'Import a backup JSON file. This replaces current app data.',chooseFile:'Choose file',backupReminder:'Backup reminder',backupReminderDesc:'Show an in-app reminder if you have not backed up recently.',language:'Language',languageDesc:'Choose Hindi or English for the interface.',clearData:'Clear all app data',clearDataDesc:'Permanently delete records from this device. Export a backup first.',clearAll:'Clear all',privacyNote:'No account, PIN or cloud sync in this version. Each device has separate data.',home:'Home',cancel:'Cancel',saveEntry:'Save entry',date:'Date',amount:'Amount',currency:'Currency',type:'Type',category:'Category',account:'Account',fromAccount:'From account',toAccount:'To account',member:'Family member',person:'Person / company',title:'Title / item',notes:'Notes',method:'Payment method',status:'Status',dueDate:'Due date',frequency:'Frequency',crop:'Crop / field',workType:'Work type',season:'Season',customName:'Name',accountType:'Account type',openingBalance:'Opening balance',budgetAmount:'Monthly limit',name:'Name',phone:'Phone / notes',source:'Source',save:'Save',delete:'Delete',edit:'Edit',noRecords:'Nothing here yet. Add your first record.',noAccounts:'No accounts yet. Add a cash, bank or UPI account.',noMembers:'No family members added yet.',noReminders:'No reminders. Add a due date for bills or EMI.',noBudgets:'No budgets yet. Set a monthly category limit.',noCategories:'No custom categories yet.',expenseType:'Expense',incomeType:'Income',transferType:'Transfer',loanGivenType:'Loan given',loanTakenType:'Loan taken',repaymentType:'Loan repayment / return',cash:'Cash',bank:'Bank account',upi:'UPI wallet',card:'Card',wallet:'Other wallet',other:'Other',cashMethod:'Cash',upiMethod:'UPI',bankTransfer:'Bank transfer',debitCard:'Debit card',creditCard:'Credit card',cheque:'Cheque',otherMethod:'Other',homeCategory:'Household',groceries:'Groceries',utilities:'Utilities & bills',rent:'Rent',education:'Education',health:'Health & medicine',transport:'Travel & vehicle',shopping:'Shopping',personal:'Personal',farmingCategory:'Farming',livestock:'Livestock',loanCategory:'Loan / repayment',insurance:'Insurance',savings:'Savings / investment',subscriptions:'Subscriptions',food:'Food & dining',gifts:'Gifts & ceremonies',salary:'Salary',business:'Business',farmIncomeCat:'Farm income',milkIncome:'Milk / livestock income',rentIncome:'Rent received',interest:'Interest income',otherIncome:'Other income',fieldWork:'Field work',ploughing:'Ploughing',sowing:'Sowing',irrigation:'Irrigation',fertilizer:'Fertilizer / seeds',harvest:'Harvest / labour',machinery:'Tractor / machinery',animalCare:'Animal feed / vet',cropSale:'Crop sale',milkSale:'Milk sale',monthly:'Monthly',yearly:'Yearly',once:'One time',due:'Due',paid:'Paid',noDue:'No due date',search:'Search',select:'Select…',confirmClear:'Delete all local app data? This cannot be undone. Export a backup first.',confirmDelete:'Delete this record?',restoreConfirm:'Restore backup and replace all current app data?',invalidBackup:'That backup file is not valid for this app.',backupDone:'Backup downloaded.',restoreDone:'Backup restored successfully.',saved:'Saved successfully.',deleted:'Deleted.',reminderDue:'Reminder due',backupNeeded:'It has been a while since your last backup. Download a JSON backup to protect your records.',backupNever:'You have not made a backup yet. Download one to protect your records.',budgetOver:'Over budget',noData:'No data for this month.',balance:'Balance',recordType:'Record type',farmRecord:'Farm record',memberName:'Member name',operator:'Operator / plan',merchant:'Shop / company',orderNo:'Order number',quantity:'Quantity',unitPrice:'Unit price',interestRate:'Interest rate %',totalLoan:'Total loan',paidAmount:'Paid amount',counterparty:'Person / counterparty',purpose:'Purpose',cropField:'Field / land',reminderTitle:'Reminder title',categoryName:'Category name',chooseAccount:'Choose account',amountPositive:'Enter a valid amount greater than zero.',accountNeeded:'Please create an account first.',sameAccount:'Choose two different accounts.',restoreFailed:'Could not restore this file.',farm:'Farm',incomeFrom:'Income source',paidBy:'Paid by',receivedBy:'Received by',forWhom:'For whom',period:'School period / year',company:'Company / source',currencyRate:'Conversion rate to INR (optional)',rateHint:'Leave blank for INR; this MVP stores the original currency but does not fetch live rates.',none:'None',recordSaved:'Record saved.',reminderNotifications:'Reminders appear inside the app; browser notifications are not scheduled in this version.'},
+ hi:{appName:'घर-परिवार हिसाब',tagline:'परिवार का पूरा हिसाब, एक जगह',overview:'एक नज़र में',goodDay:'घर का पूरा हिसाब',addEntry:'एंट्री जोड़ें',netBalance:'खातों का कुल बैलेंस',localOnly:'डिवाइस पर',income:'आय',expense:'खर्च',atAGlance:'मुख्य जानकारी',viewReports:'रिपोर्ट देखें →',thisMonthIncome:'इस महीने की आय',thisMonthExpense:'इस महीने का खर्च',accounts:'खाते',upcoming:'आने वाले रिमाइंडर',recentActivity:'हाल की एंट्री',seeAll:'सभी देखें →',quickActions:'जल्दी करें',addExpense:'खर्च जोड़ें',addIncome:'आय जोड़ें',manageAccounts:'खाते संभालें',backupRestore:'बैकअप और रिस्टोर',yourRecords:'आपका हिसाब',transactions:'लेन-देन',addNew:'नई एंट्री',searchRecords:'रिकॉर्ड खोजें…',allTypes:'सभी प्रकार',transfer:'ट्रांसफर',loanGiven:'उधार दिया',loanTaken:'उधार लिया',repayment:'उधार वापसी',farmDesk:'खेती का हिसाब',farming:'खेती-बाड़ी',addFarmRecord:'रिकॉर्ड जोड़ें',farmTracking:'हर फसल का हिसाब रखें',farmTrackingDesc:'खेत का काम, खाद-बीज, मजदूरी और फसल/दूध की आय दर्ज करें।',farmCosts:'खेती का खर्च',farmIncome:'खेती की आय',farmRecords:'खेती के रिकॉर्ड',moneyPlaces:'पैसों के खाते',addAccount:'खाता जोड़ें',accountHint:'कैश, बैंक, UPI वॉलेट और कार्ड अलग-अलग रखें।',patterns:'रिपोर्ट और योजना',reportsBudget:'रिपोर्ट और बजट',reportMonth:'रिपोर्ट का महीना',exportCsv:'CSV निकालें',net:'बचा हुआ',spendingCategories:'श्रेणी के अनुसार खर्च',monthlyBudgets:'मासिक बजट',setBudget:'＋ बजट तय करें',reminders:'रिमाइंडर',addReminder:'＋ रिमाइंडर जोड़ें',peopleAndPurpose:'परिवार और उद्देश्य',familyMembers:'परिवार के सदस्य',addMember:'सदस्य जोड़ें',familyHint:'एंट्री को परिवार के सदस्य या पैसे पाने वाले व्यक्ति से जोड़ें।',categories:'श्रेणियाँ',addCategory:'＋ श्रेणी जोड़ें',yourData:'आपका डेटा',backupImportant:'डेटा इसी डिवाइस पर रहता है',backupImportantDesc:'ब्राउज़र डेटा मिटने या फोन खोने पर रिकॉर्ड मिट सकते हैं। नियमित बैकअप बनाएं।',createBackup:'बैकअप बनाएं',createBackupDesc:'सभी रिकॉर्ड, खाते, बजट, रिमाइंडर और सेटिंग JSON फाइल में सेव करें।',downloadBackup:'बैकअप डाउनलोड करें',restoreBackup:'बैकअप वापस लाएं',restoreBackupDesc:'JSON बैकअप इम्पोर्ट करें। इससे मौजूदा ऐप डेटा बदल जाएगा।',chooseFile:'फाइल चुनें',backupReminder:'बैकअप रिमाइंडर',backupReminderDesc:'काफी समय से बैकअप न हुआ हो तो ऐप में याद दिलाएं।',language:'भाषा',languageDesc:'ऐप के लिए हिंदी या English चुनें।',clearData:'ऐप का सारा डेटा मिटाएं',clearDataDesc:'इस डिवाइस से रिकॉर्ड हमेशा के लिए हट जाएंगे। पहले बैकअप बनाएं।',clearAll:'सब मिटाएं',privacyNote:'इस संस्करण में अकाउंट, PIN या क्लाउड सिंक नहीं है। हर डिवाइस का डेटा अलग है।',home:'होम',cancel:'रद्द करें',saveEntry:'एंट्री सेव करें',date:'तारीख',amount:'रकम',currency:'मुद्रा',type:'प्रकार',category:'श्रेणी',account:'खाता',fromAccount:'किस खाते से',toAccount:'किस खाते में',member:'परिवार का सदस्य',person:'व्यक्ति / कंपनी',title:'नाम / सामान',notes:'नोट्स',method:'भुगतान का तरीका',status:'स्थिति',dueDate:'देय तारीख',frequency:'कितनी बार',crop:'फसल / खेत',workType:'काम का प्रकार',season:'मौसम / सीजन',customName:'नाम',accountType:'खाते का प्रकार',openingBalance:'शुरुआती बैलेंस',budgetAmount:'मासिक सीमा',name:'नाम',phone:'फोन / नोट्स',source:'स्रोत',save:'सेव करें',delete:'हटाएं',edit:'बदलें',noRecords:'अभी कोई रिकॉर्ड नहीं है। पहली एंट्री जोड़ें।',noAccounts:'अभी कोई खाता नहीं है। कैश, बैंक या UPI खाता जोड़ें।',noMembers:'अभी परिवार का कोई सदस्य नहीं जोड़ा गया।',noReminders:'कोई रिमाइंडर नहीं। बिल या EMI की तारीख जोड़ें।',noBudgets:'अभी बजट नहीं है। मासिक खर्च सीमा तय करें।',noCategories:'कोई कस्टम श्रेणी नहीं है।',expenseType:'खर्च',incomeType:'आय',transferType:'ट्रांसफर',loanGivenType:'उधार दिया',loanTakenType:'उधार लिया',repaymentType:'उधार की वापसी',cash:'कैश',bank:'बैंक खाता',upi:'UPI वॉलेट',card:'कार्ड',wallet:'अन्य वॉलेट',other:'अन्य',cashMethod:'कैश',upiMethod:'UPI',bankTransfer:'बैंक ट्रांसफर',debitCard:'डेबिट कार्ड',creditCard:'क्रेडिट कार्ड',cheque:'चेक',otherMethod:'अन्य',homeCategory:'घर-परिवार',groceries:'किराना',utilities:'बिल और सुविधाएं',rent:'किराया',education:'पढ़ाई',health:'स्वास्थ्य और दवा',transport:'यात्रा और वाहन',shopping:'खरीदारी',personal:'व्यक्तिगत',farmingCategory:'खेती-बाड़ी',livestock:'पशुपालन',loanCategory:'उधार / वापसी',insurance:'बीमा',savings:'बचत / निवेश',subscriptions:'सब्सक्रिप्शन',food:'खाना और बाहर भोजन',gifts:'उपहार / समारोह',salary:'वेतन',business:'व्यापार',farmIncomeCat:'खेती की आय',milkIncome:'दूध / पशुपालन की आय',rentIncome:'मिला किराया',interest:'ब्याज',otherIncome:'अन्य आय',fieldWork:'खेत का काम',ploughing:'जुताई',sowing:'बुवाई',irrigation:'सिंचाई',fertilizer:'खाद / बीज',harvest:'कटाई / मजदूरी',machinery:'ट्रैक्टर / मशीनरी',animalCare:'पशु आहार / डॉक्टर',cropSale:'फसल की बिक्री',milkSale:'दूध की बिक्री',monthly:'मासिक',yearly:'सालाना',once:'एक बार',due:'बाकी',paid:'भुगतान हो गया',noDue:'देय तारीख नहीं',search:'खोजें',select:'चुनें…',confirmClear:'क्या ऐप का सारा डेटा मिटाना है? यह वापस नहीं होगा। पहले बैकअप बनाएं।',confirmDelete:'क्या यह रिकॉर्ड हटाना है?',restoreConfirm:'बैकअप वापस लाकर मौजूदा ऐप डेटा बदल दें?',invalidBackup:'यह बैकअप फाइल इस ऐप के लिए सही नहीं है।',backupDone:'बैकअप डाउनलोड हो गया।',restoreDone:'बैकअप वापस आ गया।',saved:'सफलतापूर्वक सेव हुआ।',deleted:'हटा दिया गया।',reminderDue:'रिमाइंडर की तारीख आ गई',backupNeeded:'पिछले बैकअप को काफी समय हो गया है। रिकॉर्ड सुरक्षित रखने के लिए JSON बैकअप डाउनलोड करें।',backupNever:'अभी तक बैकअप नहीं बनाया। रिकॉर्ड सुरक्षित रखने के लिए बैकअप डाउनलोड करें।',budgetOver:'बजट से ज्यादा',noData:'इस महीने का डेटा नहीं है।',balance:'बैलेंस',recordType:'रिकॉर्ड का प्रकार',farmRecord:'खेती का रिकॉर्ड',memberName:'सदस्य का नाम',operator:'ऑपरेटर / प्लान',merchant:'दुकान / कंपनी',orderNo:'ऑर्डर नंबर',quantity:'मात्रा',unitPrice:'प्रति यूनिट कीमत',interestRate:'ब्याज दर %',totalLoan:'कुल उधार',paidAmount:'भुगतान की रकम',counterparty:'व्यक्ति / सामने वाला',purpose:'उद्देश्य',cropField:'खेत / जमीन',reminderTitle:'रिमाइंडर का नाम',categoryName:'श्रेणी का नाम',chooseAccount:'खाता चुनें',amountPositive:'शून्य से अधिक सही रकम दर्ज करें।',accountNeeded:'पहले एक खाता बनाएं।',sameAccount:'दो अलग-अलग खाते चुनें।',restoreFailed:'यह फाइल वापस नहीं लाई जा सकी।',farm:'खेती',incomeFrom:'आय का स्रोत',paidBy:'भुगतान करने वाला',receivedBy:'रकम पाने वाला',forWhom:'किसके लिए',period:'स्कूल सत्र / साल',company:'कंपनी / स्रोत',currencyRate:'INR में रूपांतरण दर (वैकल्पिक)',rateHint:'INR के लिए खाली छोड़ें; इस संस्करण में लाइव विनिमय दर नहीं मिलती।',none:'कोई नहीं',recordSaved:'रिकॉर्ड सेव हो गया।',reminderNotifications:'रिमाइंडर ऐप के अंदर दिखते हैं; इस संस्करण में ब्राउज़र नोटिफिकेशन शेड्यूल नहीं होते।'}
 };
-
-function subcategoryOptions(category) {
-  const categoryKey =
-    Object.keys(subcategoryMap).find(
-      key => key === category || tr(key) === category
-    ) || 'other';
-
-  const options = subcategoryMap[categoryKey] || subcategoryMap.other;
-  const isEnglish = state.lang === 'en';
-
-  return [
-    {
-      value: '',
-      label: isEnglish ? 'Select (optional)' : 'चुनें (वैकल्पिक)'
-    },
-    ...options.map(pair => {
-      const label = pair[isEnglish ? 0 : 1];
-      return { value: label, label: label };
-    })
-  ];
-}
+const tr=k=>(dict[state.lang]&&dict[state.lang][k])||dict.en[k]||k;
+Object.assign(dict.en,{appName:'GharKhata',tagline:'Every household expense, in one place',householdCommon:'Shared household',maintenance:'Maintenance & machinery',pocketExpense:'Pocket money',miscellaneous:'Small / miscellaneous expenses',ecommerce:'E-commerce shopping'});
+Object.assign(dict.hi,{appName:'GharKhata',tagline:'घर का हर खर्च, एक जगह',householdCommon:'घर के साझा खर्च',maintenance:'मेंटेनेंस और मशीनरी',pocketExpense:'पॉकेट खर्च',miscellaneous:'छोटे-मोटे खर्च',ecommerce:'ई-कॉमर्स खरीदारी'});
+const currencies=['INR','KWD','AED','SAR','USD','EUR','GBP','BHD','QAR','OMR','PKR','BDT','LKR','NPR','PHP','IDR','MYR','SGD','CAD','AUD'];
+const baseCategories=['householdCommon','groceries','utilities','rent','education','health','transport','maintenance','pocketExpense','miscellaneous','ecommerce','shopping','personal','farmingCategory','livestock','loanCategory','insurance','savings','subscriptions','food','gifts','salary','business','farmIncomeCat','milkIncome','rentIncome','interest','otherIncome'];
+const incomeTypes=['income','loan-taken'];
+const expenseTypes=['expense','loan-given','repayment'];
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const today=()=>new Date().toISOString().slice(0,10);
+const currentMonth=()=>today().slice(0,7);
+const fmt=(amount,currency='INR')=>{try{return new Intl.NumberFormat(state.lang==='hi'?'hi-IN':'en-US',{style:'currency',currency,maximumFractionDigits:2}).format(Number(amount)||0)}catch{return `${currency} ${Number(amount||0).toFixed(2)}`}};
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const d=req.result;for(const name of ['transactions','accounts','members','budgets','reminders','categories','farm','groceryLists','orders'])if(!d.objectStoreNames.contains(name))d.createObjectStore(name,{keyPath:'id'});};req.onsuccess=()=>{db=req.result;resolve(db)};req.onerror=()=>reject(req.error)})}
+function all(store){return new Promise((resolve,reject)=>{const req=db.transaction(store,'readonly').objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)})}
+function put(store,value){return new Promise((resolve,reject)=>{const req=db.transaction(store,'readwrite').objectStore(store).put(value);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function del(store,id){return new Promise((resolve,reject)=>{const req=db.transaction(store,'readwrite').objectStore(store).delete(id);req.onsuccess=()=>resolve();req.onerror=()=>reject(req.error)})}
+function clearStore(store){return new Promise((resolve,reject)=>{const req=db.transaction(store,'readwrite').objectStore(store).clear();req.onsuccess=()=>resolve();req.onerror=()=>reject(req.error)})}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setLang(lang){state.lang=lang;localStorage.setItem('hem_lang',lang);document.documentElement.lang=lang;renderStatic();renderAll()}
+function renderStatic(){document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;el.textContent=tr(k)});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{el.placeholder=tr(el.dataset.i18nPlaceholder)});const toggle=$('#langToggle');if(toggle)toggle.textContent=state.lang==='en'?'हिंदी':'English';}
+function go(page){$$('[data-page-view]').forEach(el=>el.hidden=el.dataset.pageView!==page);$$('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===page));state.page=page}
+function openModal(kind,record=null,extra=null){state.modalKind=kind;state.editing=record;state.modalExtra=extra;const modal=$('#modal');if(!modal)return;modal.hidden=false;renderModal()}
+function closeModal(){const modal=$('#modal');if(modal)modal.hidden=true;state.editing=null;state.modalKind=null;state.modalExtra=null}
+function toast(message){const el=$('#toast');if(!el)return;el.textContent=message;el.hidden=false;clearTimeout(window._hemToast);window._hemToast=setTimeout(()=>el.hidden=true,2600)}
+function monthOf(date){return String(date||'').slice(0,7)}
+function sum(list,fn=()=>true){return list.filter(fn).reduce((total,item)=>total+Number(item.amount||0),0)}
+function amountText(record){const prefix=incomeTypes.includes(record.type)?'+':expenseTypes.includes(record.type)?'−':'';return prefix+fmt(record.amount,record.currency||'INR')}
+function amountClass(record){return incomeTypes.includes(record.type)?'positive':expenseTypes.includes(record.type)?'negative':''}
+function accountBalance(account,transactions){let balance=Number(account.opening)||0;transactions.forEach(t=>{if(t.currency!==(account.currency||'INR'))return;if(t.type==='transfer'){if(t.fromAccount===account.id)balance-=Number(t.amount);if(t.toAccount===account.id)balance+=Number(t.amount)}else if(t.account===account.id){if(incomeTypes.includes(t.type))balance+=Number(t.amount);else if(expenseTypes.includes(t.type))balance-=Number(t.amount)}});return balance}
