@@ -94,12 +94,12 @@ const subcategoryEnglish={
 'बीज / खाद':'Seeds / fertilizer','सिंचाई':'Irrigation','मजदूरी':'Labour','मशीनरी':'Machinery','अन्य खेती खर्च':'Other farming expenses',
 'चारा':'Animal feed','पशु चिकित्सा':'Veterinary care','दूध उत्पादन':'Milk production','अन्य पशुपालन':'Other livestock expenses',
 'घर का किराया':'House rent','अन्य किराया':'Other rent','स्वास्थ्य बीमा':'Health insurance','वाहन बीमा':'Vehicle insurance','अन्य बीमा':'Other insurance',
-'चाय / नाश्ता':'Tea / snacks','रेस्टोरेंट':'Restaurant','डिलीवरी':'Delivery','अन्य भोजन':'Other food','उपहार':'Gifts','शादी / समारोह':'Wedding / ceremony','त्योहार':'Festival',
+'चाय / नाश्ता':'Tea / snacks','नाश्ता / चाय':'Snacks / tea','रेस्टोरेंट':'Restaurant','डिलीवरी':'Delivery','अन्य भोजन':'Other food','उपहार':'Gifts','शादी / समारोह':'Wedding / ceremony','त्योहार':'Festival',
 'छोटा खर्च':'Small expense','अचानक खर्च':'Unexpected expense','अन्य खर्च':'Other expense','किराना':'Groceries','दूध / डेयरी':'Milk / dairy','पानी':'Water','गैस':'Gas','बिजली':'Electricity','घर का मेंटेनेंस':'Home maintenance','अन्य साझा खर्च':'Other shared household expenses',
 'बाइक पेट्रोल':'Motorcycle fuel','कार पेट्रोल / डीज़ल':'Car petrol / diesel','ट्रैक्टर डीज़ल':'Tractor diesel','सर्विसिंग':'Servicing','इंजन ऑयल / ग्रीस':'Engine oil / grease','टायर':'Tyres','स्पेयर पार्ट्स':'Spare parts','मरम्मत':'Repairs','इंश्योरेंस':'Insurance','लैपटॉप':'Laptop','अन्य मशीनरी':'Other machinery',
 'व्यक्तिगत जेब खर्च':'Personal pocket money','व्यक्तिगत खरीदारी':'Personal shopping','अन्य पॉकेट खर्च':'Other pocket expenses','Amazon':'Amazon','Flipkart':'Flipkart','Myntra':'Myntra','अन्य प्लेटफ़ॉर्म':'Other platforms','डिलीवरी चार्ज':'Delivery charge','रिटर्न / रिफंड':'Return / refund','सामान्य खर्च':'General expense'
 };
-function subcategoryOptions(category){const found=Object.entries(subcategoryMap).find(([k])=>tr(k)===category||k===category);const arr=found?.[1]||['सामान्य खर्च','मरम्मत','अन्य'];return [{value:'',label:state.lang==='en'?'Choose (optional)':'चुनें (वैकल्पिक)'},...arr.map(x=>({value:x,label:state.lang==='en'?(subcategoryEnglish[x]||x):x}))]}
+function subcategoryOptions(category){const found=Object.entries(subcategoryMap).find(([k])=>tr(k)===category||k===category);let arr=found?.[1]||['सामान्य खर्च','मरम्मत','अन्य'];if(!found&&state.lang==='en'){arr=['General expense','Repairs','Other'];return [{value:'',label:'Choose (optional)'},...arr.map(x=>({value:x,label:x}))]}return [{value:'',label:state.lang==='en'?'Choose (optional)':'चुनें (वैकल्पिक)'},...arr.map(x=>({value:x,label:state.lang==='en'?(subcategoryEnglish[x]||x):x}))]}
 const APP_URL='https://fabrication4man-bot.github.io/GharKhata/';
 function groceryDefaultRows(){return Array.from({length:50},(_,i)=>({no:i+1,item:'',qty:'',unit:'PCS',price:''}))}
 function groceryMonth(){return $('#groceryMonth')?.value||currentMonth()}
