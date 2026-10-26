@@ -57,3 +57,12 @@
 .subcategory-choice-name{font-size:15px;line-height:1.35;font-weight:600}
 .subcategory-choice-arrow{margin-left:auto}
 @media(min-width:600px){.subcategory-choice-list{grid-template-columns:minmax(0,1fr)!important}.subcategory-panel{width:min(100%,480px)}}
+
+
+/* Final category flow fix: category selected on dashboard should not repeat the icon grid */
+.category-selected-value{background:#edf6f1!important;border:1px solid #cfe4d8!important;color:#215f4d!important;font-weight:700!important;pointer-events:none}
+.subcategory-choice-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+.subcategory-choice{width:100%;min-height:58px;justify-content:flex-start;padding:10px 14px;border-radius:14px}
+.subcategory-choice-name{font-size:15px;line-height:1.35;font-weight:600}
+.subcategory-choice-arrow{margin-left:auto}
+@media(min-width:600px){.subcategory-choice-list{grid-template-columns:minmax(0,1fr)!important}.subcategory-panel{width:min(100%,480px)}}
