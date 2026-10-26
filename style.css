@@ -12,3 +12,12 @@
 .category-icon-emoji{font-size:27px;line-height:1.2}
 .category-icon-label{font-size:12px;line-height:1.25;text-align:center;font-weight:650}
 @media(max-width:360px){.category-icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-icon-option{min-height:88px}}
+
+
+/* Main dashboard category tiles */
+.dashboard-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.dashboard-category-card{min-width:0;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:12px 6px;background:#fff;border:1px solid var(--line);border-radius:17px;color:var(--text);box-shadow:0 2px 5px rgba(27,63,48,.025)}
+.dashboard-category-card:active{transform:scale(.98);background:#eef8f2}
+.dashboard-category-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:#eaf5ef;font-size:25px}
+.dashboard-category-label{font-size:12px;line-height:1.25;font-weight:700;text-align:center;overflow-wrap:anywhere}
+@media(max-width:360px){.dashboard-category-grid{gap:7px}.dashboard-category-card{min-height:94px}.dashboard-category-label{font-size:11px}}

@@ -119,6 +119,60 @@ async function exportOrders(){const rows=await all('orders'),heads=['platform','
 async function shareApp(){await shareText('GharKhata — घर का हर खर्च, एक जगह','GharKhata ऐप खोलें: '+APP_URL+'\nपरिवार के खर्च, किराना सूची, ऑनलाइन ऑर्डर और महीने की बचत का हिसाब एक जगह।')}
 function initSharePage(){const of=$('#orderForm');if(of&&!of.elements.orderDate.value)of.elements.orderDate.value=today()}
 
+
+/* GharKhata dashboard category grid — main page */
+const dashboardCategories = [
+ {id:'groceries',icon:'🛒',en:'Groceries',hi:'किराना',sub:['Flour / rice / lentils','Oil / spices','Vegetables / fruit','Other groceries']},
+ {id:'utilities',icon:'💡',en:'Utilities & bills',hi:'बिजली / बिल',sub:['Electricity bill','Water bill','Gas cylinder','Internet / Wi-Fi','Mobile recharge','Other bills']},
+ {id:'milk',icon:'🥛',en:'Milk / dairy',hi:'दूध / डेयरी',sub:['Milk','Curd / paneer','Other dairy']},
+ {id:'rent',icon:'🏠',en:'Rent',hi:'किराया',sub:['House rent','Other rent']},
+ {id:'health',icon:'🏥',en:'Hospital',hi:'अस्पताल',sub:['Doctor fee','Hospital','Tests / lab tests','Medical emergency']},
+ {id:'medicine',icon:'💊',en:'Medicine',hi:'दवाइयाँ',sub:['Medicines','Prescription','Other health expenses']},
+ {id:'education',icon:'🎒',en:'School fees',hi:'स्कूल फीस',sub:['School fees','Books / stationery','Uniform','School trip','Events / functions']},
+ {id:'recharge',icon:'📱',en:'Mobile recharge',hi:'मोबाइल रिचार्ज',sub:['Mobile recharge','Internet / Wi-Fi']},
+ {id:'vehicle',icon:'🚗',en:'Vehicle',hi:'वाहन',sub:['Petrol','Diesel','Servicing','Repairs','Insurance']},
+ {id:'farmingCategory',icon:'🌾',en:'Farming',hi:'खेती',sub:['Seeds / fertilizer','Irrigation','Labour','Machinery','Harvest / labour']},
+ {id:'ecommerce',icon:'🛍️',en:'Online shopping',hi:'ऑनलाइन खरीदारी',sub:['Online shopping','Electronics','Clothes / shoes','Other shopping']},
+ {id:'income',icon:'💰',en:'Income',hi:'आय',sub:['Salary','Business','Farm income','Other income']},
+ {id:'loanCategory',icon:'🤝',en:'Loans',hi:'उधार / किस्त',sub:['Loan given','Loan taken','Repayment']},
+ {id:'insurance',icon:'🛡️',en:'Insurance',hi:'बीमा',sub:['Health insurance','Vehicle insurance','Other insurance']},
+ {id:'food',icon:'🍽️',en:'Food & dining',hi:'खाना / बाहर',sub:['Tea / snacks','Restaurant','Delivery','Other food']},
+ {id:'maintenance',icon:'🔧',en:'Maintenance',hi:'मेंटेनेंस',sub:['Servicing','Engine oil / grease','Spare parts','Repairs','Other machinery']},
+ {id:'pocketExpense',icon:'👛',en:'Pocket money',hi:'जेब खर्च',sub:['Personal pocket money','Personal shopping','Other pocket expenses']},
+ {id:'miscellaneous',icon:'📦',en:'Other expenses',hi:'अन्य खर्च',sub:['Small expense','Unexpected expense','Other expense']}
+];
+function renderDashboardCategoryGrid(){
+ const dashboard=document.querySelector('#dashboard'); if(!dashboard)return;
+ let section=document.querySelector('#dashboardCategorySection');
+ if(!section){
+  section=document.createElement('section'); section.id='dashboardCategorySection';
+  section.innerHTML='<div class="section-heading"><h3 id="dashboardCategoryHeading"></h3></div><div id="dashboardCategoryGrid" class="dashboard-category-grid"></div>';
+  const quick=dashboard.querySelector('.quick-grid');
+  if(quick) quick.insertAdjacentElement('afterend',section); else dashboard.appendChild(section);
+ }
+ const heading=section.querySelector('#dashboardCategoryHeading');
+ if(heading) heading.textContent=(typeof state!=='undefined'&&state.lang==='hi')?'खर्च की श्रेणियाँ':'Expense categories';
+ const grid=section.querySelector('#dashboardCategoryGrid'); if(!grid)return;
+ grid.innerHTML=dashboardCategories.map(c=>'<button type="button" class="dashboard-category-card" data-dashboard-category="'+c.id+'"><span class="dashboard-category-icon">'+c.icon+'</span><span class="dashboard-category-label">'+((typeof state!=='undefined'&&state.lang==='hi')?c.hi:c.en)+'</span></button>').join('');
+}
+document.addEventListener('click',function(e){
+ const btn=e.target.closest('[data-dashboard-category]'); if(!btn)return;
+ const c=dashboardCategories.find(x=>x.id===btn.dataset.dashboardCategory); if(!c)return;
+ const hi=(typeof state!=='undefined'&&state.lang==='hi');
+ const choices=c.sub.map((s,i)=>(i+1)+'. '+s).join('\n');
+ const answer=prompt((hi?'सब-कैटेगरी का नंबर चुनें:\n':'Choose a subcategory number:\n')+choices);
+ if(answer===null)return;
+ const n=Number(answer);
+ if(!Number.isInteger(n)||n<1||n>c.sub.length){if(typeof toast==='function')toast(hi?'सही नंबर चुनें':'Choose a valid number');return}
+ const type=c.id==='income'?'income':'expense';
+ const category=hi?c.hi:c.en;
+ openModal('transaction',null,{type:type,category:category,subcategory:c.sub[n-1]});
+});
+document.addEventListener('click',function(e){
+ if(e.target.closest('#langToggle,#settingsLang')) setTimeout(renderDashboardCategoryGrid,0);
+});
+renderDashboardCategoryGrid();
+
 function addListeners(){document.addEventListener('click',async e=>{const pg=e.target.closest('[data-page]');if(pg){go(pg.dataset.page);return}const close=e.target.closest('[data-close-modal]');if(close){closeModal();return}const quick=e.target.closest('[data-type]');if(quick){openModal('transaction',null,{type:quick.dataset.type});return}const edit=e.target.closest('[data-edit]');if(edit){await editFromStore(edit.dataset.store,edit.dataset.edit);return}const delBtn=e.target.closest('[data-delete]');if(delBtn){await removeRecord(delBtn.dataset.store,delBtn.dataset.delete);return}const od=e.target.closest('[data-order-delete]');if(od){if(confirm('इस ऑर्डर को हटाएँ?')){const order=(await all('orders')).find(x=>x.id===od.dataset.orderDelete);await del('orders',od.dataset.orderDelete);if(order?.transactionId)await del('transactions',order.transactionId);await renderAll()}return}});$('#langToggle').onclick=()=>setLang(state.lang==='en'?'hi':'en');$('#settingsLang').onclick=()=>setLang(state.lang==='en'?'hi':'en');$('#quickAdd').onclick=()=>openModal('transaction');$('#newTransaction').onclick=()=>openModal('transaction');$('#newFarm').onclick=()=>openModal('farmTransaction',null,{type:'expense'});$('#newAccount').onclick=()=>openModal('account');$('#newMember').onclick=()=>openModal('member');$('#newBudget').onclick=()=>openModal('budget');$('#newReminder').onclick=()=>openModal('reminder');$('#newCategory').onclick=()=>openModal('category');$('#searchTransactions').oninput=renderTransactions;$('#filterType').onchange=renderTransactions;$('#reportMonth').onchange=renderReports;$('#exportCsv').onclick=exportCsv;$('#downloadReport').onclick=downloadReport;$('#printReport').onclick=()=>printCurrent('#reports','GharKhata मासिक रिपोर्ट');$('#shareReport').onclick=shareReport;$('#groceryMonth').onchange=()=>loadGrocery(true);$('#loadGrocery').onclick=()=>loadGrocery(false);$('#saveGrocery').onclick=saveGrocery;$('#downloadGrocery').onclick=()=>download('GharKhata-kirana-'+groceryMonth()+'.csv','\ufeff'+groceryCsv(),'text/csv;charset=utf-8');$('#printGrocery').onclick=()=>printCurrent('#groceryRows','GharKhata मासिक किराना सूची '+groceryMonth());$('#shareGrocery').onclick=shareGrocery;$('#orderForm').onsubmit=saveOrder;$('#exportOrders').onclick=exportOrders;$('#shareAppLink').onclick=shareApp;$('#copyAppLink').onclick=async()=>{try{await navigator.clipboard.writeText(APP_URL);toast('ऐप लिंक कॉपी हो गया')}catch{await shareApp()}};$('#createBackup').onclick=backup;$('#restoreFile').onchange=e=>{if(e.target.files[0])restore(e.target.files[0]);e.target.value=''};$('#backupReminderToggle').onchange=e=>{state.backupReminder=e.target.checked;localStorage.setItem('hem_backup_reminder',String(state.backupReminder));toast(tr('saved'))};$('#clearData').onclick=async()=>{if(!confirm(tr('confirmClear')))return;for(const s of ['transactions','accounts','members','budgets','reminders','categories','farm','groceryLists','orders'])await clearStore(s);await seed();await renderAll();toast(tr('deleted'))};$$('.nav-item').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));initSharePage();if($('#orderForm'))$('#orderForm').elements.orderDate.value=today();}
 async function init(){try{db=await openDB();await seed();window.groceryRows=groceryDefaultRows();addListeners();setLang(state.lang);await loadGrocery(true);if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});if(!window.isSecureContext&&location.protocol!=='file:')toast('For offline install, open this app over HTTPS.')}catch(e){document.body.innerHTML='<main><h2>Storage unavailable</h2><p>This browser could not open local storage. Try opening the app in Chrome.</p></main>';console.error(e)}}
 init();
