@@ -155,18 +155,33 @@ function renderDashboardCategoryGrid(){
  const grid=section.querySelector('#dashboardCategoryGrid'); if(!grid)return;
  grid.innerHTML=dashboardCategories.map(c=>'<button type="button" class="dashboard-category-card" data-dashboard-category="'+c.id+'"><span class="dashboard-category-icon">'+c.icon+'</span><span class="dashboard-category-label">'+((typeof state!=='undefined'&&state.lang==='hi')?c.hi:c.en)+'</span></button>').join('');
 }
+function closeSubcategorySheet(){
+ const old=document.querySelector('#subcategorySheet');
+ if(old) old.remove();
+}
+function showSubcategorySheet(c){
+ closeSubcategorySheet();
+ const hi=typeof state!=='undefined'&&state.lang==='hi';
+ const title=hi?c.hi:c.en;
+ const items=c.sub.map((s,i)=>'<button type="button" class="subcategory-choice" data-subcategory-index="'+i+'"><span class="subcategory-choice-icon">'+(['🧾','🛍️','📌','✨','💳','📦'][i%6])+'</span><span class="subcategory-choice-name">'+s+'</span><span class="subcategory-choice-arrow">›</span></button>').join('');
+ const sheet=document.createElement('div');
+ sheet.id='subcategorySheet'; sheet.className='subcategory-overlay';
+ sheet.innerHTML='<div class="subcategory-backdrop" data-subcategory-close></div><section class="subcategory-panel" role="dialog" aria-modal="true"><div class="subcategory-handle"></div><div class="subcategory-panel-head"><div><p class="subcategory-eyebrow">'+(hi?'श्रेणी चुनें':'SELECT CATEGORY')+'</p><h3>'+title+'</h3></div><button type="button" class="subcategory-close" data-subcategory-close aria-label="Close">×</button></div><p class="subcategory-help">'+(hi?'नीचे दिए गए विकल्पों में से चुनें':'Tap an option below')+'</p><div class="subcategory-choice-list">'+items+'</div></section>';
+ document.body.appendChild(sheet);
+ sheet.addEventListener('click',function(ev){
+  if(ev.target.closest('[data-subcategory-close]')){closeSubcategorySheet();return}
+  const choice=ev.target.closest('[data-subcategory-index]'); if(!choice)return;
+  const sub=c.sub[Number(choice.dataset.subcategoryIndex)];
+  closeSubcategorySheet();
+  const type=c.id==='income'?'income':'expense';
+  const category=hi?c.hi:c.en;
+  openModal('transaction',null,{type:type,category:category,subcategory:sub});
+ });
+}
 document.addEventListener('click',function(e){
  const btn=e.target.closest('[data-dashboard-category]'); if(!btn)return;
  const c=dashboardCategories.find(x=>x.id===btn.dataset.dashboardCategory); if(!c)return;
- const hi=(typeof state!=='undefined'&&state.lang==='hi');
- const choices=c.sub.map((s,i)=>(i+1)+'. '+s).join('\n');
- const answer=prompt((hi?'सब-कैटेगरी का नंबर चुनें:\n':'Choose a subcategory number:\n')+choices);
- if(answer===null)return;
- const n=Number(answer);
- if(!Number.isInteger(n)||n<1||n>c.sub.length){if(typeof toast==='function')toast(hi?'सही नंबर चुनें':'Choose a valid number');return}
- const type=c.id==='income'?'income':'expense';
- const category=hi?c.hi:c.en;
- openModal('transaction',null,{type:type,category:category,subcategory:c.sub[n-1]});
+ showSubcategorySheet(c);
 });
 document.addEventListener('click',function(e){
  if(e.target.closest('#langToggle,#settingsLang')) setTimeout(renderDashboardCategoryGrid,0);
