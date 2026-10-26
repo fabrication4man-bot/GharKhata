@@ -21,3 +21,9 @@
 .dashboard-category-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:#eaf5ef;font-size:25px}
 .dashboard-category-label{font-size:12px;line-height:1.25;font-weight:700;text-align:center;overflow-wrap:anywhere}
 @media(max-width:360px){.dashboard-category-grid{gap:7px}.dashboard-category-card{min-height:94px}.dashboard-category-label{font-size:11px}}
+
+
+/* Layout correction: categories first; hide duplicate Add entry action */
+#dashboardCategorySection{margin-top:0;margin-bottom:20px}
+#dashboardCategorySection .section-heading{margin-top:4px}
+#quickAdd{display:none!important}

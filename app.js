@@ -147,8 +147,8 @@ function renderDashboardCategoryGrid(){
  if(!section){
   section=document.createElement('section'); section.id='dashboardCategorySection';
   section.innerHTML='<div class="section-heading"><h3 id="dashboardCategoryHeading"></h3></div><div id="dashboardCategoryGrid" class="dashboard-category-grid"></div>';
-  const quick=dashboard.querySelector('.quick-grid');
-  if(quick) quick.insertAdjacentElement('afterend',section); else dashboard.appendChild(section);
+  const welcome=dashboard.querySelector('.welcome');
+  if(welcome) welcome.insertAdjacentElement('beforebegin',section); else dashboard.prepend(section);
  }
  const heading=section.querySelector('#dashboardCategoryHeading');
  if(heading) heading.textContent=(typeof state!=='undefined'&&state.lang==='hi')?'खर्च की श्रेणियाँ':'Expense categories';
