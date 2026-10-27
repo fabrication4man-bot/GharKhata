@@ -2,3 +2,67 @@
 
 /* GharKhata brand and new feature screens */
 .brand-icon-img{width:44px;height:44px;border-radius:13px;object-fit:cover;box-shadow:0 3px 10px #155e4b18}.grocery-controls{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:12px 0}.grocery-controls label{font-size:11px;color:var(--muted);flex:1;min-width:120px}.grocery-controls input{display:block;width:100%;margin-top:6px;border:1px solid var(--line);border-radius:11px;padding:11px;background:white}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:14px;background:white}.grocery-table{border-collapse:collapse;width:100%;min-width:600px;font-size:12px}.grocery-table th,.grocery-table td{padding:7px;border-bottom:1px solid var(--line);text-align:left}.grocery-table th{background:#edf5f0;color:var(--green);position:sticky;top:0}.grocery-table input,.grocery-table select{width:100%;min-width:72px;border:1px solid var(--line);border-radius:7px;padding:8px;background:#fff;color:var(--text)}.grocery-table td:first-child{font-weight:800;text-align:center}.report-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}.order-form,.share-card{background:white;border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:15px}.share-card{text-align:center;padding:22px}.share-card h3{margin-top:0}.share-card p{font-size:12px;color:var(--muted);line-height:1.6}.app-qr{display:block;width:220px;height:220px;max-width:70vw;margin:14px auto;border:1px solid var(--line);padding:8px;border-radius:12px;background:white}.link-button{display:inline-block;text-decoration:none}.bottom-nav{overflow-x:auto;justify-content:flex-start}.nav-item{min-width:64px}.nav-item small{white-space:nowrap}.report-actions button{flex:1}.field.full{grid-column:1/-1}@media(max-width:420px){.report-controls{flex-wrap:wrap}.report-controls label{min-width:130px}.report-actions button{font-size:12px;padding:10px}.grocery-controls button{flex:1}}@media print{.topbar,.bottom-nav,.report-actions,.grocery-controls,.quick-grid,.nav-item{display:none!important}.page{display:block!important}.page:not(.active){display:none!important}.grocery-table input,.grocery-table select{border:0;padding:0}.list-card,.share-card,.order-form{border:0}}
+
+/* Category picker: compact icon grid for mobile */
+.category-icon-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:4px}
+.category-native-select{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;overflow:hidden!important}
+.category-icon-option{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:96px;padding:10px 6px;border:1px solid var(--line,#dfe7e2);border-radius:15px;background:#fff;color:var(--text,#18352c);font:inherit;cursor:pointer;overflow-wrap:anywhere}
+.category-icon-option:focus-visible{outline:3px solid #8bc8b0;outline-offset:2px}
+.category-icon-option.selected{border:2px solid var(--green,#176b56);background:#e8f5ef;box-shadow:0 0 0 2px rgba(23,107,86,.08)}
+.category-icon-emoji{font-size:27px;line-height:1.2}
+.category-icon-label{font-size:12px;line-height:1.25;text-align:center;font-weight:650}
+@media(max-width:360px){.category-icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-icon-option{min-height:88px}}
+
+
+/* Main dashboard category tiles */
+.dashboard-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.dashboard-category-card{min-width:0;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:12px 6px;background:#fff;border:1px solid var(--line);border-radius:17px;color:var(--text);box-shadow:0 2px 5px rgba(27,63,48,.025)}
+.dashboard-category-card:active{transform:scale(.98);background:#eef8f2}
+.dashboard-category-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:#eaf5ef;font-size:25px}
+.dashboard-category-label{font-size:12px;line-height:1.25;font-weight:700;text-align:center;overflow-wrap:anywhere}
+@media(max-width:360px){.dashboard-category-grid{gap:7px}.dashboard-category-card{min-height:94px}.dashboard-category-label{font-size:11px}}
+
+
+/* Layout correction: categories first; hide duplicate Add entry action */
+#dashboardCategorySection{margin-top:0;margin-bottom:20px}
+#dashboardCategorySection .section-heading{margin-top:4px}
+#quickAdd{display:none!important}
+
+
+/* Native-looking in-app subcategory chooser; no browser prompt */
+.subcategory-overlay{position:fixed;inset:0;z-index:1200;display:flex;align-items:flex-end;justify-content:center}
+.subcategory-backdrop{position:absolute;inset:0;background:rgba(15,30,25,.48);backdrop-filter:blur(3px)}
+.subcategory-panel{position:relative;z-index:1;width:min(100%,560px);max-height:82dvh;overflow-y:auto;background:#f8faf8;border-radius:26px 26px 0 0;padding:10px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.16);animation:subcategorySlideUp .2s ease-out}
+.subcategory-handle{width:42px;height:5px;border-radius:8px;background:#cbd6d0;margin:0 auto 18px}
+.subcategory-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.subcategory-eyebrow{font-size:10px;letter-spacing:1.4px;font-weight:800;color:#347663;margin:0 0 5px}
+.subcategory-panel-head h3{font-size:23px;line-height:1.2;margin:0;color:#18352c}
+.subcategory-close{width:40px;height:40px;border:0;border-radius:50%;background:#eaf2ed;color:#294a3e;font-size:27px;line-height:1}
+.subcategory-help{font-size:13px;color:#718078;margin:10px 0 14px}
+.subcategory-choice-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.subcategory-choice{display:flex;align-items:center;gap:10px;min-height:70px;padding:12px 10px;border:1px solid #e0e9e3;border-radius:16px;background:#fff;text-align:left;color:#18352c;font:inherit;box-shadow:0 2px 6px rgba(27,63,48,.035)}
+.subcategory-choice:active{background:#eaf6ef;border-color:#73b69a;transform:scale(.985)}
+.subcategory-choice-icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;background:#eaf5ef;font-size:18px}
+.subcategory-choice-name{flex:1;min-width:0;font-size:13px;line-height:1.3;font-weight:650;overflow-wrap:anywhere}
+.subcategory-choice-arrow{font-size:24px;color:#47836d;line-height:1}
+@keyframes subcategorySlideUp{from{transform:translateY(24px);opacity:.7}to{transform:translateY(0);opacity:1}}
+@media(min-width:600px){.subcategory-overlay{align-items:center;padding:20px}.subcategory-panel{border-radius:26px;max-height:80vh}.subcategory-choice-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:360px){.subcategory-choice-list{grid-template-columns:1fr}.subcategory-choice{min-height:62px}}
+
+
+/* FINAL: simple, readable one-column subcategory list */
+.subcategory-choice-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+.subcategory-choice{width:100%;min-height:58px;justify-content:flex-start;padding:10px 14px;border-radius:14px}
+.subcategory-choice-icon{width:38px;height:38px;flex:0 0 38px}
+.subcategory-choice-name{font-size:15px;line-height:1.35;font-weight:600}
+.subcategory-choice-arrow{margin-left:auto}
+@media(min-width:600px){.subcategory-choice-list{grid-template-columns:minmax(0,1fr)!important}.subcategory-panel{width:min(100%,480px)}}
+
+
+/* Final category flow fix: category selected on dashboard should not repeat the icon grid */
+.category-selected-value{background:#edf6f1!important;border:1px solid #cfe4d8!important;color:#215f4d!important;font-weight:700!important;pointer-events:none}
+.subcategory-choice-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+.subcategory-choice{width:100%;min-height:58px;justify-content:flex-start;padding:10px 14px;border-radius:14px}
+.subcategory-choice-name{font-size:15px;line-height:1.35;font-weight:600}
+.subcategory-choice-arrow{margin-left:auto}
+@media(min-width:600px){.subcategory-choice-list{grid-template-columns:minmax(0,1fr)!important}.subcategory-panel{width:min(100%,480px)}}
