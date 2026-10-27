@@ -1,0 +1,8 @@
+In the #grocery section, change the report-actions buttons to include:
+<button class="secondary" id="addGroceryRow">＋ नई लाइन जोड़ें</button>
+<button class="secondary" id="downloadGrocery">डाउनलोड CSV</button>
+<button class="secondary" id="downloadGroceryPdf">PDF डाउनलोड करें</button>
+<button class="secondary" id="printGrocery">प्रिंट</button>
+<button class="primary" id="shareGrocery">शेयर लिस्ट</button>
+
+This is a snippet, not a complete index.html.

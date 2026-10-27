@@ -1,0 +1,36 @@
+GHARKHATA APP.JS — REQUIRED REPLACEMENTS
+========================================
+This is a replacement guide based on the current public app.js. It is not a complete app.js file.
+
+1) Replace the current subcategoryMap entries for utilities and health, and add milk and recharge:
+
+ groceries:['आटा / चावल / दाल','तेल / मसाले','सब्ज़ी / फल','नाश्ता / पैक्ड फूड','सफाई का सामान','अन्य किराना'],
+ utilities:['बिजली बिल','पानी बिल','गैस सिलेंडर','इंटरनेट / Wi-Fi','OTT / सब्सक्रिप्शन','अन्य बिल'],
+ milk:['दूध','दही','पनीर','मक्खन','घी','छाछ','चीज़','अन्य डेयरी उत्पाद'],
+ recharge:['मोबाइल रिचार्ज','मोबाइल डेटा पैक','पोस्टपेड बिल','अंतरराष्ट्रीय रोमिंग','अन्य मोबाइल खर्च'],
+ health:['डॉक्टर फीस','अस्पताल का बिल','दवाइयाँ','जाँच / लैब टेस्ट','चश्मा','मेडिकल इमरजेंसी','अन्य स्वास्थ्य खर्च'],
+
+2) Add these English translations to subcategoryEnglish:
+'दूध':'Milk','दही':'Curd','पनीर':'Paneer','मक्खन':'Butter','घी':'Ghee',
+'छाछ':'Buttermilk','चीज़':'Cheese','अन्य डेयरी उत्पाद':'Other dairy products',
+'अस्पताल का बिल':'Hospital bill','मोबाइल डेटा पैक':'Mobile data pack',
+'पोस्टपेड बिल':'Postpaid bill','अंतरराष्ट्रीय रोमिंग':'International roaming',
+'अन्य मोबाइल खर्च':'Other mobile expenses'
+
+3) In showSubcategorySheet(), replace categoryKeys with:
+const categoryKeys={
+ groceries:'groceries',utilities:'utilities',milk:'milk',rent:'rent',
+ health:'health',education:'education',recharge:'recharge',
+ vehicle:'transport',farmingCategory:'farmingCategory',ecommerce:'ecommerce',
+ income:'salary',loanCategory:'loanCategory',insurance:'insurance',food:'food',
+ maintenance:'maintenance',pocketExpense:'pocketExpense',miscellaneous:'miscellaneous'
+};
+
+4) In dashboardCategories, remove the separate Medicine card and make the Hospital card:
+{id:'health',icon:'🏥',en:'Hospital & Medical',hi:'अस्पताल एवं चिकित्सा',
+ sub:['Doctor fee','Hospital bill','Medicines','Tests / lab tests','Medical emergency','Other health expenses']},
+Make Utilities sub-list exclude Mobile recharge. Make Mobile recharge sub-list:
+{id:'recharge',icon:'📱',en:'Mobile recharge',hi:'मोबाइल रिचार्ज',
+ sub:['Mobile recharge','Mobile data pack','Postpaid bill','International roaming','Other mobile expenses']}
+
+5) Grocery list language, auto-save, adding rows and PDF are NOT safely installable as a small replacement alone because they require coordinated edits to renderGrocery(), addListeners(), index.html and the app's localization/render lifecycle. Use the complete feature specification in README.txt and don't paste snippets into production without integrating and testing them.
