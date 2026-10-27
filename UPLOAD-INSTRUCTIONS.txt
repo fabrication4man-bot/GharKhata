@@ -1,23 +1,21 @@
-GharKhata updated source bundle
+GharKhata grocery-list fixes
 
-Main updates in app.js:
-- Keeps the dashboard category-card design.
-- Merges Hospital and Medicine into one Health & Medical category.
-- Moves Mobile Recharge into Utilities & Bills.
-- Adds a dedicated mobile recharge form for multiple family members: name, phone, operator, plan validity, amount, expiry date, reminder schedule and payment method.
-- Saves recharge as an expense transaction and creates in-app reminder records for 3 days before, 1 day before and expiry day (user can choose a different schedule).
-- Adds a separate Milk / Dairy category and tailored category subcategory choices.
-- Keeps the 50-row monthly grocery list and existing reports/backup/order features.
-- Bumps service-worker cache version to reduce stale interface issues.
+BEFORE UPLOADING:
+1. In GitHub, download a ZIP backup of the current repository.
+2. Keep an in-app JSON backup of your records from GharKhata > Backup & restore.
+3. Extract this ZIP on your phone.
+4. Upload/replace the files INSIDE the GharKhata-Fix folder at the repository root (do not upload the folder itself).
+5. Commit the changes.
+6. Open the live site in Chrome and refresh. If the old version remains, close the app fully and reopen the site in a fresh tab.
 
-Upload instructions:
-1. Extract this ZIP on the phone.
-2. On GitHub repository main branch, upload/replace the files in this folder at the repository root (do not upload the folder itself).
-3. Make sure all 9 files are selected, including images, manifest and sw.js.
-4. Check filenames before committing.
-5. Test the live website in a fresh Chrome tab. If the old app is installed as a PWA, close it fully and reopen after the service-worker update.
+Included fixes:
+- Add extra grocery rows beyond the default 50 rows.
+- Auto-save grocery edits; explicit Save button remains available.
+- Grocery screen, units, buttons, PDF labels and CSV headers switch between Hindi and English.
+- Mobile grocery table stays inside its own horizontal scroll area.
+- Print/PDF layout includes GharKhata name, month, populated rows only, and app QR code.
 
-Reminder limitation:
-The app stores reminder dates and displays due reminders when the app is opened. Browser notification permission may be requested, but a static web app/service worker alone does not guarantee scheduled notifications while the app is closed. Test this on-device before relying on alerts.
+PDF NOTE:
+On Android, tap “Download PDF / Print” and choose “Save as PDF” in the print dialog. This browser print flow is used instead of a server-generated PDF.
 
-Before replacing files, download a ZIP of the current repository as backup. Existing IndexedDB data remains on the same browser origin, but create an in-app JSON backup first.
+This ZIP has not been fully device-tested. Test with a small sample list first and confirm the PDF QR opens https://fabrication4man-bot.github.io/GharKhata/ before relying on it.
