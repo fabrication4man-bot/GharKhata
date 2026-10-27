@@ -1,14 +1,25 @@
 {
-  "name":"GharKhata — घर का हर खर्च, एक जगह",
-  "short_name":"GharKhata",
-  "description":"परिवार की आय, खर्च, किराना सूची, ऑनलाइन ऑर्डर और बचत का हिसाब",
-  "start_url":"./index.html",
-  "scope":"./",
-  "display":"standalone",
-  "background_color":"#f5f7f5",
-  "theme_color":"#155e4b",
-  "icons":[
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  "id": "https://fabrication4man-bot.github.io/GharKhata/",
+  "name": "GharKhata — घर का हर खर्च, एक जगह",
+  "short_name": "GharKhata",
+  "description": "परिवार की आय, खर्च, किराना सूची, ऑनलाइन ऑर्डर और बचत का हिसाब",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f5",
+  "theme_color": "#155e4b",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
