@@ -1,0 +1,23 @@
+GharKhata updated source bundle
+
+Main updates in app.js:
+- Keeps the dashboard category-card design.
+- Merges Hospital and Medicine into one Health & Medical category.
+- Moves Mobile Recharge into Utilities & Bills.
+- Adds a dedicated mobile recharge form for multiple family members: name, phone, operator, plan validity, amount, expiry date, reminder schedule and payment method.
+- Saves recharge as an expense transaction and creates in-app reminder records for 3 days before, 1 day before and expiry day (user can choose a different schedule).
+- Adds a separate Milk / Dairy category and tailored category subcategory choices.
+- Keeps the 50-row monthly grocery list and existing reports/backup/order features.
+- Bumps service-worker cache version to reduce stale interface issues.
+
+Upload instructions:
+1. Extract this ZIP on the phone.
+2. On GitHub repository main branch, upload/replace the files in this folder at the repository root (do not upload the folder itself).
+3. Make sure all 9 files are selected, including images, manifest and sw.js.
+4. Check filenames before committing.
+5. Test the live website in a fresh Chrome tab. If the old app is installed as a PWA, close it fully and reopen after the service-worker update.
+
+Reminder limitation:
+The app stores reminder dates and displays due reminders when the app is opened. Browser notification permission may be requested, but a static web app/service worker alone does not guarantee scheduled notifications while the app is closed. Test this on-device before relying on alerts.
+
+Before replacing files, download a ZIP of the current repository as backup. Existing IndexedDB data remains on the same browser origin, but create an in-app JSON backup first.
