@@ -1,0 +1,126 @@
+/* GharKhata grocery fixes — apply in app.js
+Replace the existing renderGrocery(), saveGrocery(), and loadGrocery() functions
+with these. Add renderGroceryComparison() below them.
+*/
+
+function renderGrocery() {
+  const monthEl = $('#groceryMonth');
+  if (!monthEl) return;
+  if (!monthEl.value) monthEl.value = currentMonth();
+
+  const rows = window.groceryRows || groceryDefaultRows();
+  const hi = state.lang === 'hi';
+  const labels = hi
+    ? {month:'महीना',load:'लिस्ट खोलें',save:'लिस्ट सेव करें',no:'क्र.',item:'सामान का नाम',qty:'मात्रा',unit:'यूनिट',price:'कीमत (वैकल्पिक)',csv:'डाउनलोड CSV',print:'प्रिंट',share:'शेयर लिस्ट',heading:'मासिक किराना सूची',eyebrow:'मासिक खरीदारी',summary:'50 लाइन · यूनिट चुनें · कीमत वैकल्पिक',placeholder:'सामान का नाम',optional:'वैकल्पिक',note:'यूनिट में ग्राम, किलोग्राम, लीटर, मिलीलीटर, पीस या रुपये के हिसाब से चुन सकते हैं। रकम से मँगाए सामान के लिए मात्रा खाली छोड़कर कीमत में रकम लिखें.'}
+    : {month:'Month',load:'Load list',save:'Save list',no:'No.',item:'Item name',qty:'Quantity',unit:'Unit',price:'Price (optional)',csv:'Download CSV',print:'Print',share:'Share list',heading:'Monthly grocery list',eyebrow:'MONTHLY SHOPPING',summary:'50 rows · Choose unit · Price optional',placeholder:'Item name',optional:'Optional',note:'Choose gram, kilogram, liter, milliliter, pieces, or by amount. For amount-based purchases, leave quantity blank and enter the amount as price.'};
+
+  const units = hi
+    ? [['Gram','ग्राम'],['Kilogram','किलोग्राम'],['Liter','लीटर'],['Milliliter','मिलीलीटर'],['PCS','पीस'],['By amount','रुपये के हिसाब से']]
+    : [['Gram','Gram'],['Kilogram','Kilogram'],['Liter','Liter'],['Milliliter','Milliliter'],['PCS','PCS'],['By amount','By amount']];
+
+  const canonical = {'ग्राम':'Gram','किलोग्राम':'Kilogram','लीटर':'Liter','मिलीलीटर':'Milliliter','पीस':'PCS','रुपये के हिसाब से':'By amount'};
+  const heading = $('#grocery .page-title h2');
+  if (heading) heading.textContent = labels.heading;
+  const eyebrow = $('#grocery .eyebrow');
+  if (eyebrow) eyebrow.textContent = labels.eyebrow;
+  const summary = $('#grocery .page-title .muted');
+  if (summary) summary.textContent = labels.summary;
+  const controlLabel = $('#grocery .grocery-controls label');
+  if (controlLabel && controlLabel.firstChild) controlLabel.firstChild.textContent = labels.month;
+  $('#loadGrocery').textContent = labels.load;
+  $('#saveGrocery').textContent = labels.save;
+
+  $$('#grocery .grocery-table thead th').forEach((th, i) => {
+    th.textContent = [labels.no, labels.item, labels.qty, labels.unit, labels.price][i] || th.textContent;
+  });
+
+  $('#groceryRows').innerHTML = rows.map((r, i) => {
+    const selectedUnit = canonical[r.unit] || r.unit || 'PCS';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td><input data-grocery="item" data-i="${i}" value="${escapeHtml(r.item || '')}" aria-label="${labels.item} ${i + 1}" placeholder="${labels.placeholder}"></td>
+      <td><input data-grocery="qty" data-i="${i}" type="number" min="0" step="any" value="${escapeHtml(r.qty || '')}" aria-label="${labels.qty}"></td>
+      <td><select data-grocery="unit" data-i="${i}">${units.map(([v, t]) => `<option value="${v}" ${v === selectedUnit ? 'selected' : ''}>${t}</option>`).join('')}</select></td>
+      <td><input data-grocery="price" data-i="${i}" type="number" min="0" step="0.01" value="${escapeHtml(r.price || '')}" placeholder="${labels.optional}" aria-label="${labels.price}"></td>
+    </tr>`;
+  }).join('');
+
+  $$('#grocery .report-actions button').forEach((button, i) => {
+    button.textContent = [labels.csv, labels.print, labels.share][i] || button.textContent;
+  });
+  const note = $('#grocery .footnote');
+  if (note) note.textContent = labels.note;
+  renderGroceryComparison();
+}
+
+async function saveGrocery(silent = false) {
+  const month = groceryMonth();
+  const rows = readGroceryRows();
+  await put('groceryLists', {id:month, month, rows, updatedAt:new Date().toISOString()});
+  window.groceryRows = rows;
+  if (!silent) toast(state.lang === 'hi' ? 'मासिक किराना लिस्ट सेव हो गई' : 'Monthly grocery list saved');
+  await renderGroceryComparison();
+}
+
+async function loadGrocery(silent = false) {
+  const month = groceryMonth();
+  const saved = (await all('groceryLists')).find(x => x.month === month);
+  window.groceryRows = saved?.rows || groceryDefaultRows();
+  renderGrocery();
+  if (!silent) toast(saved
+    ? (state.lang === 'hi' ? 'सेव की गई लिस्ट खुल गई' : 'Saved list loaded')
+    : (state.lang === 'hi' ? 'नई मासिक लिस्ट तैयार है' : 'New monthly list ready'));
+}
+
+async function renderGroceryComparison() {
+  const host = $('#groceryComparison');
+  if (!host || !db) return;
+  const hi = state.lang === 'hi';
+  const now = new Date();
+  const from = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+  const to = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const lists = (await all('groceryLists')).filter(x => {
+    if (!/^\d{4}-\d{2}$/.test(x.month || '')) return false;
+    const d = new Date(x.month + '-01T00:00:00');
+    return d >= from && d < to;
+  });
+  const items = new Map();
+  for (const list of lists) for (const r of (list.rows || [])) {
+    const name = (r.item || '').trim();
+    if (!name || r.price === '' || r.price == null) continue;
+    const price = Number(r.price);
+    if (!Number.isFinite(price) || price < 0) continue;
+    const key = name.toLocaleLowerCase();
+    if (!items.has(key)) items.set(key, {name, entries:[]});
+    items.get(key).entries.push({month:list.month, price, unit:r.unit || 'PCS'});
+  }
+  const rows = [...items.values()].filter(x => x.entries.length >= 2).map(x => {
+    x.entries.sort((a,b) => a.month.localeCompare(b.month));
+    const old = x.entries[0], latest = x.entries[x.entries.length - 1];
+    return {name:x.name, old, latest, diff:latest.price-old.price,
+      pct:old.price ? (latest.price-old.price)/old.price*100 : null};
+  }).sort((a,b) => Math.abs(b.diff)-Math.abs(a.diff));
+
+  host.innerHTML = `<h3>${hi ? 'पिछले 6 महीनों की कीमत तुलना' : 'Price comparison — last 6 months'}</h3>
+    <p class="muted">${hi ? 'एक ही सामान की कम-से-कम दो अलग-अलग महीनों की कीमत सेव करें।' : 'Save prices for the same item in at least two different months.'}</p>` +
+    (rows.length ? `<div class="table-scroll"><table><thead><tr>
+      <th>${hi?'सामान':'Item'}</th><th>${hi?'पुराना भाव':'Earlier price'}</th>
+      <th>${hi?'नया भाव':'Latest price'}</th><th>${hi?'अंतर':'Change'}</th>
+      </tr></thead><tbody>${rows.map(x => `<tr>
+        <td>${escapeHtml(x.name)}<small class="muted" style="display:block">${x.old.month} → ${x.latest.month}</small></td>
+        <td>${x.old.price.toFixed(2)} / ${escapeHtml(x.old.unit)}</td>
+        <td>${x.latest.price.toFixed(2)} / ${escapeHtml(x.latest.unit)}</td>
+        <td style="color:${x.diff>0?'#b42318':x.diff<0?'#16803c':'inherit'}">${x.diff>0?'+':''}${x.diff.toFixed(2)}${x.pct==null?'':` (${x.pct>0?'+':''}${x.pct.toFixed(2)}%)`}</td>
+      </tr>`).join('')}</tbody></table></div>`
+    : `<p class="footnote">${hi?'अभी तुलना के लिए पर्याप्त कीमतें सेव नहीं हैं।':'Not enough saved prices to compare yet.'}</p>`);
+}
+
+/* In addListeners(), replace the existing groceryMonth onchange listener with:
+   $('#groceryRows').addEventListener('input', e => {
+     if (e.target.matches('[data-grocery]')) saveGrocery(true);
+   });
+   $('#groceryRows').addEventListener('change', e => {
+     if (e.target.matches('[data-grocery]')) saveGrocery(true);
+   });
+   $('#groceryMonth').onchange = () => loadGrocery(true);
+*/

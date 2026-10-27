@@ -1,0 +1,2 @@
+<!-- Add inside <section id="grocery"> after the grocery action buttons: -->
+<div id="groceryComparison" class="card" style="margin-top:20px;padding:16px"></div>

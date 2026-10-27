@@ -1,0 +1,1 @@
+GharKhata patch files. These are patch snippets, not complete app.js/index.html replacements. Current GitHub integration denied writes, so no live update has been made. The patch needs applying to existing files before deployment.
