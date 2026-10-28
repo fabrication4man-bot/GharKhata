@@ -85,8 +85,8 @@
       if (!month.value && typeof window.currentMonth === 'function') month.value = window.currentMonth();
       const rows = window.groceryRows || Array.from({length:50}, (_,i)=>({no:i+1,item:'',qty:'',unit:'PCS',price:''}));
       const units = hi()
-        ? [['g','g'],['kg','kg'],['l','l'],['ml','ml'],['PCS','PCS'],['Packet','Packet'],['रुपये','रुपये']]
-        : [['g','g'],['kg','kg'],['l','l'],['ml','ml'],['PCS','PCS'],['Packet','Packet'],['रुपये','Rupees']];
+        ? [['g','ग्राम'],['kg','kg'],['l','लीटर'],['ml','ml'],['PCS','PCS'],['Packet','पैकेट'],['रुपये','रुपये']]
+        : [['g','Gram'],['kg','kg'],['l','Litre'],['ml','ml'],['PCS','PCS'],['Packet','Packet'],['रुपये','Rupees']];
       $('#groceryRows').innerHTML = rows.map((r,i) => {
         const unit = unitValue(r.unit);
         const esc = window.escapeHtml || (v => String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
@@ -94,7 +94,7 @@
       }).join('');
       if (typeof window.translateGrocery === 'function') window.translateGrocery();
       const hint = $('#groceryPdfHint');
-      if (hint) hint.textContent = say('यूनिट: g, kg, l, ml, PCS, Packet या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: g, kg, l, ml, PCS, Packet or Rupees. Review imported items before saving.');
+      if (hint) hint.textContent = say('यूनिट: g, kg, l, ml, PCS, Packet या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: Gram, kg, Litre, ml, PCS, Packet or Rupees. Review imported items before saving.');
     };
   }
   const oldReadGroceryRows = window.readGroceryRows;
@@ -182,7 +182,7 @@
     const title = say('मासिक किराना सूची', 'Monthly Grocery List');
     const month = $('#groceryMonth')?.value || '';
     const esc = window.escapeHtml || (v => String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
-    const unitMap = {'Gram':'g','Kilogram':'kg','Liter':'l','Milliliter':'ml','रुपये के हिसाब से':say('रुपये','Rupees'),'रुपये':say('रुपये','Rupees'),'Packet':'Packet','PCS':'PCS','g':'g','kg':'kg','l':'l','ml':'ml'};
+    const unitMap = {'Gram':say('ग्राम','Gram'),'Kilogram':'kg','Liter':say('लीटर','Litre'),'Litre':say('लीटर','Litre'),'Milliliter':'ml','रुपये के हिसाब से':say('रुपये','Rupees'),'रुपये':say('रुपये','Rupees'),'Packet':say('पैकेट','Packet'),'PCS':'PCS','g':say('ग्राम','Gram'),'kg':'kg','l':say('लीटर','Litre'),'ml':'ml'};
     const body = rows.map((r,i)=>`<tr><td class="num">${i+1}</td><td class="item">${esc(r.item)}</td><td class="qty">${esc(r.qty)}</td><td class="unit">${esc(unitMap[r.unit]||r.unit||'')}</td><td class="price">${esc(r.price)}</td></tr>`).join('');
     const w = window.open('', '_blank');
     if (!w) { if(typeof window.toast==='function')window.toast(say('पॉप-अप की अनुमति दें','Allow pop-ups to create PDF')); return; }
