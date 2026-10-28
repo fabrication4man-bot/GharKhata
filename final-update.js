@@ -94,7 +94,7 @@
       }).join('');
       if (typeof window.translateGrocery === 'function') window.translateGrocery();
       const hint = $('#groceryPdfHint');
-      if (hint) hint.textContent = say('यूनिट: g, kg, l, ml, PCS, Packet या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: Gram, kg, Litre, ml, PCS, Packet or Rupees. Review imported items before saving.');
+      if (hint) hint.textContent = say('यूनिट: ग्राम, kg, लीटर, ml, PCS, पैकेट या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: Gram, kg, Litre, ml, PCS, Packet or Rupees. Review imported items before saving.');
     };
   }
   const oldReadGroceryRows = window.readGroceryRows;
