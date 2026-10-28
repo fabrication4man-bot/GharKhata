@@ -32,7 +32,7 @@ function ensureDashboardCard(){
   const grid=document.querySelector('#dashboardCategoryGrid');
   if(!grid)return;
   const existing=grid.querySelector('[data-fm-category-card]');
-  if(existing){const label=existing.querySelector('.dashboard-category-label');if(label)label.textContent=t('घर के लिए रकम','Family money');return;}
+  if(existing){const label=existing.querySelector('.dashboard-category-label');const wanted=t('घर के लिए रकम','Family money');if(label&&label.textContent!==wanted)label.textContent=wanted;return;}
   const card=document.createElement('button');
   card.type='button';card.className='dashboard-category-card';card.setAttribute('data-fm-category-card','true');
   card.innerHTML='<span class="dashboard-category-icon">🏠</span><span class="dashboard-category-label">'+t('घर के लिए रकम','Family money')+'</span>';
@@ -45,7 +45,7 @@ function installDashboardCard(){
   if(grid&&!grid.dataset.fmObserver){grid.dataset.fmObserver='1';new MutationObserver(()=>ensureDashboardCard()).observe(grid,{childList:true});}
   if(!document.documentElement.dataset.fmCardClick){document.documentElement.dataset.fmCardClick='1';document.addEventListener('click',e=>{if(e.target.closest('[data-fm-category-card]'))shell();});}
 }
-async function start(){installDashboardCard();new MutationObserver(()=>installDashboardCard()).observe(document.body,{childList:true,subtree:true});const hint=document.querySelector('#groceryHint,.grocery-hint,[data-grocery-hint]');if(hint)hint.textContent=t('यूनिट: ग्राम, kg, लीटर, ml, PCS, पैकेट या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: Gram, kg, Litre, ml, PCS, Packet or Rupees. Review imported items before saving.');
+async function start(){installDashboardCard();const hint=document.querySelector('#groceryHint,.grocery-hint,[data-grocery-hint]');if(hint)hint.textContent=t('यूनिट: ग्राम, kg, लीटर, ml, PCS, पैकेट या रुपये। फोटो से पढ़ी सूची सेव करने से पहले जाँचें।','Units: Gram, kg, Litre, ml, PCS, Packet or Rupees. Review imported items before saving.');
   // Recover the detail index from transaction notes after a JSON backup restore.
   try{const data=records(),txs=await all('transactions');let changed=false;for(const tx of txs){if(!tx?.notes||!String(tx.notes).startsWith('{'))continue;let n;try{n=JSON.parse(tx.notes)}catch{continue}if(!n?.familyMoney||!n.detailId||data[n.detailId])continue;data[n.detailId]={id:n.detailId,transactionId:tx.id,date:tx.date,amount:Number(tx.amount)||0,member:tx.member||'',account:tx.account||'',person:tx.person||'',note:n.note||'',source:n.source||(tx.type==='expense'?'given':tx.subcategory||'family'),sourceLabel:tx.category||'',kind:tx.type==='expense'?'given':'received',allocations:Array.isArray(n.allocations)?n.allocations:[],createdAt:tx.createdAt||new Date().toISOString(),updatedAt:tx.updatedAt||new Date().toISOString()};changed=true}if(changed)putRecords(data)}catch(e){console.warn('Family money recovery skipped',e)}
 }
