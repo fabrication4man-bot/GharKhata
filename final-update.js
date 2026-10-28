@@ -5,6 +5,9 @@
   const $$ = (s) => [...document.querySelectorAll(s)];
   const hi = () => document.documentElement.lang === 'hi';
   const say = (h, e) => hi() ? h : e;
+  const style = document.createElement('style');
+  style.textContent = '.field select,.filters select,#groceryRows select{appearance:auto;-webkit-appearance:menulist;pointer-events:auto;position:relative;z-index:1;touch-action:manipulation}.more-details{grid-column:1/-1;border:1px solid #d8e2dc;background:#fff;border-radius:12px;padding:12px}.more-details summary{font-weight:800;color:#155e4b;cursor:pointer;list-style:none}.more-details summary::-webkit-details-marker{display:none}.more-details summary:after{content:"＋";float:right}.more-details[open] summary:after{content:"−"}.more-details .field{margin-top:12px}.grocery-import-tools{background:#fff;border:1px solid #d8e2dc;border-radius:14px;padding:10px 12px;margin:10px 0}.grocery-import-tools .grocery-controls{margin:0}.grocery-import-tools .footnote{margin:8px 0 0}';
+  document.head.appendChild(style);
   const validPage = (id) => !!document.getElementById(id)?.classList.contains('page');
 
   // Android/browser Back: move between app sections instead of exiting immediately.
