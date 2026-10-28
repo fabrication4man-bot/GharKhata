@@ -1,0 +1,15 @@
+<!-- Add these controls inside the #grocery section, before the month controls. -->
+<div class="grocery-import-tools">
+  <div class="grocery-controls">
+    <button type="button" class="secondary" id="readGroceryPhoto">📷 फोटो से लिस्ट पढ़ें</button>
+    <button type="button" class="secondary" id="readGroceryFile">📄 मोबाइल से लिस्ट चुनें</button>
+    <input id="groceryPhotoInput" type="file" accept="image/*" capture="environment" hidden>
+    <input id="groceryFileInput" type="file" accept="image/*,.txt,.csv,text/plain,text/csv" hidden>
+  </div>
+  <p id="groceryReadStatus" class="footnote">फोटो या टेक्स्ट/CSV लिस्ट चुनें। पढ़े गए सामान को सेव करने से पहले जाँचें। फोटो पढ़ने के लिए इंटरनेट चाहिए।</p>
+</div>
+
+<!-- Add these script/style changes in index.html -->
+<link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
+<script src="final-update.js"></script>
