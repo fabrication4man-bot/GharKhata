@@ -203,22 +203,17 @@ jobs:
           path: twa-build/release/
           retention-days: 90
 
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: gharkhata-v1.0.0
-          name: GharKhata v1.0.0
-          body: |
-            GharKhata Android TWA package.
-            
-            The APK opens the GharKhata GitHub Pages app in Trusted Web Activity mode without the browser address bar.
-            Web app changes can be deployed to GitHub Pages without rebuilding this APK.
-          files: |
-            twa-build/release/GharKhata.apk
-            twa-build/release/GharKhata.aab
-          make_latest: true
-          overwrite_files: true
-
+      - name: Publish GitHub Release with GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create gharkhata-v1.0.1 \
+            twa-build/release/GharKhata.apk \
+            twa-build/release/GharKhata.aab \
+            --repo fabrication4man-bot/GharKhata \
+            --title "GharKhata v1.0.1" \
+            --notes "GharKhata Android TWA package. The APK opens the GitHub Pages app without the browser address bar. Web app changes can be deployed without rebuilding the APK." \
+            --latest
       - name: Upload release assets with GitHub CLI
         env:
           GH_TOKEN: ${{ github.token }}
