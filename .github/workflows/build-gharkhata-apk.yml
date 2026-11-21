@@ -126,9 +126,14 @@ jobs:
           EOF
 
       - name: Configure Bubblewrap
-        working-directory: twa-build
         run: |
-          bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+          mkdir -p "$HOME/.bubblewrap"
+          cat > "$HOME/.bubblewrap/config.json" <<EOF
+          {
+            "jdkPath": "$JAVA_HOME",
+            "androidSdkPath": "$ANDROID_HOME"
+          }
+          EOF
 
       - name: Generate Android project
         working-directory: twa-build
