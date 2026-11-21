@@ -189,8 +189,12 @@ jobs:
           mkdir -p release
           cp GharKhata.apk release/
           cp GharKhata.aab release/
-          cp gharkhata-release.keystore release/
-          cp signing-key-info.txt release/
+          KEYSTORE_FILE="$(find . -type f -name 'gharkhata-release.keystore' | head -1)"
+          INFO_FILE="$(find . -type f -name 'signing-key-info.txt' | head -1)"
+          test -n "$KEYSTORE_FILE"
+          test -n "$INFO_FILE"
+          cp "$KEYSTORE_FILE" release/
+          cp "$INFO_FILE" release/
 
       - name: Upload APK package
         uses: actions/upload-artifact@v4
