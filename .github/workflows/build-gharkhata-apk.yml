@@ -203,45 +203,18 @@ jobs:
           path: twa-build/release/
           retention-days: 90
 
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: gharkhata-v1.0.0
-          name: GharKhata v1.0.0
-          body: |
-            GharKhata Android TWA package.
-            
-            The APK opens the GharKhata GitHub Pages app in Trusted Web Activity mode without the browser address bar.
-            Web app changes can be deployed to GitHub Pages without rebuilding this APK.
-          make_latest: true
-          overwrite_files: true
-
-      - name: Upload release binaries via GitHub upload API
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Publish APK in repository
         shell: bash
         run: |
           set -euo pipefail
-          RELEASE_ID="$(curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/fabrication4man-bot/GharKhata/releases/tags/gharkhata-v1.0.0" | python -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
-          curl -fsSL -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "Content-Type: application/vnd.android.package-archive" \
-            --data-binary @twa-build/release/GharKhata.apk \
-            "https://uploads.github.com/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=GharKhata.apk"
-          curl -fsSL -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "Content-Type: application/octet-stream" \
-            --data-binary @twa-build/release/GharKhata.aab \
-            "https://uploads.github.com/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=GharKhata.aab"
-
-      - name: Upload release assets with GitHub CLI
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release upload gharkhata-v1.0.0 \
-            twa-build/release/GharKhata.apk \
-            twa-build/release/GharKhata.aab \
-            --clobber
+          mkdir -p android-download
+          cp twa-build/release/GharKhata.apk android-download/GharKhata.apk
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android-download/GharKhata.apk
+          if git diff --cached --quiet; then
+            echo "APK already current"
+          else
+            git commit -m "Publish GharKhata APK"
+            git push
+          fi
