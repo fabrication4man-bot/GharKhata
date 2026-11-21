@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.fabrication4man_bot.gharkhata",
+      "sha256_cert_fingerprints": ["97:09:70:21:88:D9:E1:4C:2B:CE:54:9B:45:14:26:4C:BC:32:24:B8:61:BB:D9:31:7A:9A:8F:78:78:99:AC:37"]
+    }
+  }
+]
