@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "io.github.fabrication4man_bot.gharkhata",
-      "sha256_cert_fingerprints": ["EB:B8:E6:E6:A0:74:33:F7:B5:C3:E9:63:C2:8B:E5:3E:5A:43:11:E1:89:53:4B:6A:4D:8D:1C:28:B7:5C:46:91"]
+      "sha256_cert_fingerprints": ["91:56:51:F7:72:09:9B:74:BE:4E:94:E5:B5:4B:BE:09:1D:6C:FC:0F:7D:57:99:48:2C:29:CD:02:4D:EE:0C:AD"]
     }
   }
 ]
