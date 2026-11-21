@@ -216,23 +216,27 @@ jobs:
           make_latest: true
           overwrite_files: true
 
-      - name: Upload release binaries via GitHub API
+      - name: Upload release binaries via GitHub upload API
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          RELEASE_ID="$(gh api repos/fabrication4man-bot/GharKhata/releases/tags/gharkhata-v1.0.0 --jq .id)"
-          for file in GharKhata.apk GharKhata.aab; do
-            name="$file"
-            mime="application/octet-stream"
-            if [ "$file" = "GharKhata.apk" ]; then mime="application/vnd.android.package-archive"; fi
-            gh api --method POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "Content-Type: $mime" \
-              "/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=$name" \
-              --input "twa-build/release/$file"
-          done
+          RELEASE_ID="$(curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/fabrication4man-bot/GharKhata/releases/tags/gharkhata-v1.0.0" | python -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
+          curl -fsSL -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/vnd.android.package-archive" \
+            --data-binary @twa-build/release/GharKhata.apk \
+            "https://uploads.github.com/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=GharKhata.apk"
+          curl -fsSL -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @twa-build/release/GharKhata.aab \
+            "https://uploads.github.com/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=GharKhata.aab"
+
       - name: Upload release assets with GitHub CLI
         env:
           GH_TOKEN: ${{ github.token }}
