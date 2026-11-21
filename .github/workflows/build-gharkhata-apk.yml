@@ -1,0 +1,170 @@
+name: Build GharKhata APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+
+      - name: Prepare Android SDK
+        shell: bash
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Create signing key and TWA manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p twa-build
+          KEYSTORE="$GITHUB_WORKSPACE/twa-build/gharkhata-release.keystore"
+          KEY_ALIAS="gharkhata"
+
+          KEYSTORE_PASSWORD="$(openssl rand -hex 24)"
+          KEY_PASSWORD="$KEYSTORE_PASSWORD"
+
+          keytool -genkeypair -v \
+            -keystore "$KEYSTORE" \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -keypass "$KEY_PASSWORD" \
+            -alias "$KEY_ALIAS" \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=GharKhata, OU=Engineering, O=GharKhata, C=IN"
+
+          FINGERPRINT="$(keytool -list -v -keystore "$KEYSTORE" -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" | awk -F': ' '/SHA256:/{print $2; exit}')"
+
+          cat > twa-build/twa-manifest.json <<'JSON'
+          {
+            "packageId": "io.github.fabrication4man_bot.gharkhata",
+            "host": "fabrication4man-bot.github.io",
+            "name": "GharKhata",
+            "launcherName": "GharKhata",
+            "themeColor": "#155e4b",
+            "themeColorDark": "#155e4b",
+            "navigationColor": "#155e4b",
+            "navigationColorDark": "#155e4b",
+            "navigationDividerColor": "#155e4b",
+            "navigationDividerColorDark": "#155e4b",
+            "backgroundColor": "#f5f7f5",
+            "enableNotifications": false,
+            "startUrl": "/GharKhata/",
+            "iconUrl": "https://fabrication4man-bot.github.io/GharKhata/icon-512.png",
+            "maskableIconUrl": "https://fabrication4man-bot.github.io/GharKhata/icon-512.png",
+            "splashScreenFadeOutDuration": 300,
+            "signingKey": {
+              "path": "./gharkhata-release.keystore",
+              "alias": "gharkhata"
+            },
+            "appVersionName": "1.0.0",
+            "appVersionCode": 1,
+            "shortcuts": [],
+            "generatorApp": "bubblewrap-cli",
+            "webManifestUrl": "https://fabrication4man-bot.github.io/GharKhata/manifest.webmanifest",
+            "fallbackType": "customtabs",
+            "appVersion": "1.0.0",
+            "minSdkVersion": 24
+          }
+          JSON
+
+          cat > twa-build/assetlinks.json <<JSON
+          [
+            {
+              "relation": ["delegate_permission/common.handle_all_urls"],
+              "target": {
+                "namespace": "android_app",
+                "package_name": "io.github.fabrication4man_bot.gharkhata",
+                "sha256_cert_fingerprints": ["$FINGERPRINT"]
+              }
+            }
+          ]
+          JSON
+
+          printf '%s\n' "$KEYSTORE_PASSWORD" > twa-build/.keystore-password
+          printf '%s\n' "$KEY_ALIAS" > twa-build/.key-alias
+
+          cat > twa-build/signing-key-info.txt <<EOF
+          GharKhata Android signing information
+
+          Keystore: gharkhata-release.keystore
+          Alias: $KEY_ALIAS
+          Keystore password: $KEYSTORE_PASSWORD
+          Key password: $KEY_PASSWORD
+          SHA-256 certificate fingerprint: $FINGERPRINT
+
+          Keep the keystore and this file together. The keystore is required to sign future native APK/AAB updates with the same Android identity.
+          EOF
+
+      - name: Generate Android project
+        working-directory: twa-build
+        run: |
+          bubblewrap update --manifest="$PWD/twa-manifest.json"
+
+      - name: Build signed APK and AAB
+        working-directory: twa-build
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ '' }}
+          BUBBLEWRAP_KEY_PASSWORD: ${{ '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          export BUBBLEWRAP_KEYSTORE_PASSWORD="$(cat .keystore-password)"
+          export BUBBLEWRAP_KEY_PASSWORD="$(cat .keystore-password)"
+          bubblewrap build \
+            --manifest="$PWD/twa-manifest.json" \
+            --signingKeyPath="$PWD/gharkhata-release.keystore" \
+            --signingKeyAlias="gharkhata" \
+            --skipPwaValidation
+
+      - name: Publish Digital Asset Links
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .well-known
+          cp twa-build/assetlinks.json .well-known/assetlinks.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .well-known/assetlinks.json
+          if git diff --cached --quiet; then
+            echo "assetlinks.json already current"
+          else
+            git commit -m "Set GharKhata TWA asset links"
+            git push
+          fi
+
+      - name: Prepare release artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp app-release-signed.apk GharKhata.apk
+          cp app-release-bundle.aab GharKhata.aab
+          rm -f twa-build/.keystore-password twa-build/.key-alias
+          mkdir -p release
+          cp GharKhata.apk release/
+          cp GharKhata.aab release/
+          cp gharkhata-release.keystore release/
+          cp signing-key-info.txt release/
+
+      - name: Upload APK package
+        uses: actions/upload-artifact@v4
+        with:
+          name: GharKhata-Android-Package
+          path: twa-build/release/
+          retention-days: 90
