@@ -179,8 +179,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cp app-release-signed.apk GharKhata.apk
-          cp app-release-bundle.aab GharKhata.aab
+          APK="$(find . -type f -name 'app-release-signed.apk' | head -1)"
+          AAB="$(find . -type f -name 'app-release-bundle.aab' | head -1)"
+          test -n "$APK"
+          test -n "$AAB"
+          cp "$APK" GharKhata.apk
+          cp "$AAB" GharKhata.aab
           rm -f twa-build/.keystore-password twa-build/.key-alias
           mkdir -p release
           cp GharKhata.apk release/
