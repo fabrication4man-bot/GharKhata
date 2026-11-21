@@ -218,3 +218,12 @@ jobs:
             twa-build/release/GharKhata.aab
           make_latest: true
           overwrite_files: true
+
+      - name: Upload release assets with GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload gharkhata-v1.0.0 \
+            twa-build/release/GharKhata.apk \
+            twa-build/release/GharKhata.aab \
+            --clobber
