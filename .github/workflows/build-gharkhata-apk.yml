@@ -203,17 +203,36 @@ jobs:
           path: twa-build/release/
           retention-days: 90
 
-      - name: Publish GitHub Release with GitHub CLI
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: gharkhata-v1.0.0
+          name: GharKhata v1.0.0
+          body: |
+            GharKhata Android TWA package.
+            
+            The APK opens the GharKhata GitHub Pages app in Trusted Web Activity mode without the browser address bar.
+            Web app changes can be deployed to GitHub Pages without rebuilding this APK.
+          make_latest: true
+          overwrite_files: true
+
+      - name: Upload release binaries via GitHub API
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
-          gh release create gharkhata-v1.0.1 \
-            twa-build/release/GharKhata.apk \
-            twa-build/release/GharKhata.aab \
-            --repo fabrication4man-bot/GharKhata \
-            --title "GharKhata v1.0.1" \
-            --notes "GharKhata Android TWA package. The APK opens the GitHub Pages app without the browser address bar. Web app changes can be deployed without rebuilding the APK." \
-            --latest
+          set -euo pipefail
+          RELEASE_ID="$(gh api repos/fabrication4man-bot/GharKhata/releases/tags/gharkhata-v1.0.0 --jq .id)"
+          for file in GharKhata.apk GharKhata.aab; do
+            name="$file"
+            mime="application/octet-stream"
+            if [ "$file" = "GharKhata.apk" ]; then mime="application/vnd.android.package-archive"; fi
+            gh api --method POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: $mime" \
+              "/repos/fabrication4man-bot/GharKhata/releases/$RELEASE_ID/assets?name=$name" \
+              --input "twa-build/release/$file"
+          done
       - name: Upload release assets with GitHub CLI
         env:
           GH_TOKEN: ${{ github.token }}
