@@ -138,7 +138,7 @@ jobs:
       - name: Generate Android project
         working-directory: twa-build
         run: |
-          bubblewrap update --manifest="$PWD/twa-manifest.json"
+          bubblewrap update --manifest="$PWD/twa-manifest.json" --appVersionName="1.0.0" --skipVersionUpgrade
 
       - name: Build signed APK and AAB
         working-directory: twa-build
