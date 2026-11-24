@@ -1,4 +1,4 @@
-const CACHE='gharkhata-v10';
+const CACHE='gharkhata-v11';
 const CORE=['./','./index.html','./style.css','./app.js','./final-update.js','./family-money.js','./manifest.webmanifest','./icon-192.png','./icon-512.png','./app-qr.png'];
 
 self.addEventListener('install', event => {
