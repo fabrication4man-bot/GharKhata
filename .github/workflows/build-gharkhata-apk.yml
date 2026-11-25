@@ -164,7 +164,27 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .well-known
-          cp twa-build/assetlinks.json .well-known/assetlinks.json
+          FINGERPRINT="$(awk -F': ' '/SHA-256 certificate fingerprint:/{print $2; exit}' twa-build/signing-key-info.txt)"
+          if [ -f .well-known/assetlinks.json ]; then
+            jq --arg fp "$FINGERPRINT" '
+              .[0].target.sha256_cert_fingerprints =
+                ((.[0].target.sha256_cert_fingerprints // []) + [$fp] | unique)
+            ' .well-known/assetlinks.json > .well-known/assetlinks.json.tmp
+            mv .well-known/assetlinks.json.tmp .well-known/assetlinks.json
+          else
+            cat > .well-known/assetlinks.json <<JSON
+          [
+            {
+              "relation": ["delegate_permission/common.handle_all_urls"],
+              "target": {
+                "namespace": "android_app",
+                "package_name": "io.github.fabrication4man_bot.gharkhata",
+                "sha256_cert_fingerprints": ["$FINGERPRINT"]
+              }
+            }
+          ]
+          JSON
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .well-known/assetlinks.json
